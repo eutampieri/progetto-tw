@@ -7,6 +7,8 @@ $products = [
     [
         "title" => "Lorem Ipsum",
         "price" => 1299,
+        "image" => "https://picsum.photos/200/300",
+        "id" => 0,
     ]
 ];
 require_once("templates/main.php");
