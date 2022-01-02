@@ -23,6 +23,6 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
 	<div class="col">Totale ordine</div>
 	<div class="col"><?= price_to_string(array_reduce(array_map(fn($product):int => $product['price']*$product['quantity'],$products), fn($a, $b):int => $a+$b)) ?></div>
 </div>
-<div class="row"><button type="button m-2" class="btn btn-primary">Apple pay (fast checkout)</button></div>
-<div class="row"><button type="button m-2" class="btn btn-primary">Google pay (fast checkout)</button></div>
-<div class="row"><button type="button m-2" class="btn btn-primary">Paga con carta</button></div>
+<div class="row"><button type="button" class="btn btn-primary m-2">Apple pay (fast checkout)</button></div>
+<div class="row"><button type="button" class="btn btn-primary m-2">Google pay (fast checkout)</button></div>
+<div class="row"><button type="button" class="btn btn-primary m-2">Paga con carta</button></div>
