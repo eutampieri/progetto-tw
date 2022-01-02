@@ -5,11 +5,11 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
   <?php foreach($products as $product): ?>
   <div class="card m-2 product" >
     <a href="/product.php?id=<?= $product["id"] ?>">
-    <img src="<?= $product["image"] ?>" class="card-img-top"
+    <img src="/image.php?id=<?= $product["id"] ?>" class="card-img-top"
       alt=""></a>
     <div class="card-body">
       <a href="/product.php?id=<?= $product["id"] ?>">
-      <h2><?= $product["title"] ?></h2>
+      <h2><?= $product["name"] ?></h2>
       </a>
       <a href="/cart.php" class="btn btn-primary showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i> <?= price_to_string($product["price"])?></a>
     </div>
