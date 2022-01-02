@@ -18,6 +18,7 @@ if(!isset($_SESSION["cart_id"])) {
 
 $stmt = $db->prepare("SELECT MAX(quantity) AS q FROM (SELECT quantity FROM cart WHERE id = :id AND product_id=:pid UNION SELECT 0);");
 $stmt->bindParam(":id", $_SESSION["cart_id"]);
+$stmt->bindParam(":pid", $_GET["product_id"]);
 $stmt->execute();
 $old_quantity = intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["q"]);
 
@@ -35,4 +36,5 @@ $query->execute();
 $stmt = $db->prepare("DELETE FROM cart WHERE quantity <= 0");
 $stmt->execute();
 
+http_response_code(303);
 header("Location: /cart.php?json");
