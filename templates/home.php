@@ -11,7 +11,7 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
       <a href="/product.php?id=<?= $product["id"] ?>">
       <h2><?= $product["title"] ?></h2>
       </a>
-      <a href="." class="btn btn-primary showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i> <?= price_to_string($product["price"])?></a>
+      <a href="/cart.php" class="btn btn-primary showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i> <?= price_to_string($product["price"])?></a>
     </div>
   </div>
   <?php endforeach; ?>
