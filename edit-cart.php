@@ -12,7 +12,7 @@ if(!isset($_SESSION["cart_id"])) {
         $query = $db->prepare("UPDATE user SET cart_id = :id WHERE id = :uid;");
         $query->bindParam(":uid", $_SESSION["user_id"]);
         $query->bindParam(":id", $_SESSION["cart_id"]);
-        $quert->execute();
+        $query->execute();
     }
 }
 
