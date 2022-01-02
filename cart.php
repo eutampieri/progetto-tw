@@ -1,5 +1,7 @@
 <?php
-$pdo = new PDO("");
+require_once("utils.php");
+
+$pdo = get_db();
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $cart_id = 1;
 $cart_query = $pdo->query("select * from cart, product where cart.id = :cart_id AND product_id = product.id");
