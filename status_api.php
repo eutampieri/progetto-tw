@@ -14,6 +14,6 @@
 	$updates_query->execute();
 	$res['updates'] = $updates_query->fetchAll(PDO::FETCH_ASSOC);
 
-	header("Content-Type: text/json");
+	header("Content-Type: application/json");
 	echo json_encode($res);
 ?>
