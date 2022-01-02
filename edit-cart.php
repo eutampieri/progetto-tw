@@ -2,14 +2,12 @@
 require_once("utils.php");
 $db = get_db();
 
-if($_SESSION === null) {
-    session_start();
-}
+session_start();
+
 if(!isset($_SESSION["cart_id"])) {
-    $query = $db->prepare("INSERT INTO cart VALUES(NULL, 0, 0)");
+    $query = $db->prepare("SELECT MAX(id)+1 as id FROM cart;");
     $query->execute();
-    $res = $query->fetchAll(PDO::FETCH_ASSOC);
-    $_SESSION["cart_id"] =$res[0]["id"];
+    $_SESSION["cart_id"] = $query->fetchAll(PDO::FETCH_ASSOC)[0]["id"];
     if(isset($_SESSION["user_id"])){
         $query = $db->prepare("UPDATE user SET cart_id = :id WHERE id = :uid;");
         $query->bindParam(":uid", $_SESSION["user_id"]);
@@ -19,7 +17,7 @@ if(!isset($_SESSION["cart_id"])) {
 }
 
 $stmt = $db->prepare("SELECT MAX(quantity) AS q FROM (SELECT quantity FROM cart WHERE id = :id AND product_id=:pid UNION SELECT 0);");
-$query->bindParam(":id", $_SESSION["cart_id"]);
+$stmt->bindParam(":id", $_SESSION["cart_id"]);
 $stmt->execute();
 $old_quantity = intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["q"]);
 
