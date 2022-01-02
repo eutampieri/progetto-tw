@@ -36,3 +36,5 @@ $query->execute();
 
 $stmt = $db->prepare("DELETE FROM cart WHERE quantity <= 0");
 $stmt->execute();
+
+header("Location: /cart.php?json");
