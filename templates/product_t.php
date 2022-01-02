@@ -3,10 +3,10 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
 ?>
 <main>
     <section>
-        <img src="<?= $product["image"] ?>">
+        <img src="/image.php?id=<?= $product["id"] ?>">
         <div class="d-flex justify-content-between">
             <h2>
-                <?= $product["title"] ?>
+                <?= $product["name"] ?>
             </h2>
             <span class="price">
                 <?= price_to_string($product["price"])?>
