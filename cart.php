@@ -1,28 +1,26 @@
 <?php
 require_once("utils.php");
 
+session_start();
+
 $pdo = get_db();
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$cart_id = 1;
-$cart_query = $pdo->query("select * from cart, product where cart.id = :cart_id AND product_id = product.id");
-$cart_query->bindParam(":cart_id",$cart_id);
+$cart_query = $pdo->query("select cart.id, product_id, quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
+$cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
 $cart_query->execute();
 $cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
 $delivery_price = 500;
-$total_price = $delivery_price;
 
-$page_title = "Home";
-$head_template = "page_head.php";
-$body_template = "page.php";
-$page_content_template = "cart_t.php";
-$products = [
-	[
-		"image" => "",
-        "title" => "Lorem Ipsum",
-		"quantity" => 3,
-        "price" => 1299,
-        "image" => "https://picsum.photos/200/300",
-        "id" => 0,
-    ]
-];
-require_once("templates/main.php");
+if(isset($_GET["json"])) {
+    header("Content-Type: application/json");
+    echo json_encode([
+        "delivery_price" => $delivery_price,
+        "items" => $cart,
+    ]);
+} else {
+    $page_title = "Home";
+    $head_template = "page_head.php";
+    $body_template = "page.php";
+    $page_content_template = "cart_t.php";
+    require_once("templates/main.php");
+}
