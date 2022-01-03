@@ -51,8 +51,13 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
 
     } else {
         $_SESSION["payment_failed"] = true;
+        http_response_code(303);
         header("Location: /cart.php");
     }
+} else if(isset($_GET["cancel"])) {
+    $_SESSION["payment_failed"] = true;
+    http_response_code(303);
+    header("Location: /cart.php");
 } else {
     http_response_code(303);
     header("Location: /");
