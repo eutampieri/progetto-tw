@@ -9,7 +9,7 @@
 </main>
 <script>
 	async function load(){
-		document.getElementById("main_content").appendChild(await display_order(1));
+		document.getElementById("main_content").appendChild(await display_order(<?= $order_id ?>));
 	}
 	load();
 </script>
