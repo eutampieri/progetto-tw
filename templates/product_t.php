@@ -1,9 +1,11 @@
 <?php
 require_once(dirname(dirname(__FILE__))."/utils.php");
 ?>
-<main>
-    <section>
-        <img src="/image.php?id=<?= $product["id"] ?>">
+<main class="row">
+    <section class="col-md-4">
+        <img class="w-100" src="/image.php?id=<?= $product["id"] ?>">
+    </section>
+    <section class="col-md-8">
         <div class="d-flex justify-content-between">
             <h2>
                 <?= $product["name"] ?>
