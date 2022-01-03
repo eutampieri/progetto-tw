@@ -40,7 +40,7 @@ class Stripe
         error_log($query);
         $resp = generic_request("https://api.stripe.com/v1/checkout/sessions", $query, ["Authorization: Basic ".base64_encode($this->secret.':')], "POST");
         return [
-            "id"=>$resp["id"],
+            "url"=>$resp["url"],
             "payment_intent" => $resp["payment_intent"]
         ];
     }
@@ -51,4 +51,8 @@ class Stripe
     function capture_payment($intent) {
         generic_request("https://api.stripe.com/v1/payment_intents/$intent/capture", "", ["Authorization: Basic ".base64_encode($this->secret.':')], "POST");
     }
+}
+
+function calc_delivery_price($cart) {
+    return 500;
 }
