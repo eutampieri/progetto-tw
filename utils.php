@@ -11,17 +11,33 @@ function get_db() {
 }
 
 function http_request($url, $body, $headers = [], $method="GET") {
-    $opts = array('http' =>
-        array(
-            'method'  => $method,
-            'header'  => array_merge(['Content-Type: application/x-www-form-urlencoded'], $headers),
-            'content' => $body
-        )
-    );
+    if(function_exists('curl_version')) {
+        $ch = curl_init();
 
-    $context  = stream_context_create($opts);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        if($method === "POST") {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-    return file_get_contents($url, false, $context);
+        $server_output = curl_exec($ch);
+
+        curl_close ($ch);
+        return $server_output;
+    } else { // Fallback
+        $opts = array('http' =>
+            array(
+                'method'  => $method,
+                'header'  => array_merge(['Content-Type: application/x-www-form-urlencoded'], $headers),
+                'content' => $body
+            )
+        );
+        $context  = stream_context_create($opts);
+
+        return file_get_contents($url, false, $context);
+    }
 }
 
 class Stripe
