@@ -14,6 +14,7 @@ async function update_cart(item) {
 			item.dataset["oldvalue"]=cart_item.quantity;
 		}
 	}
+	update_cart_items(cart);
 	document.getElementById("total_price").innerHTML=((total_price/100.0).toFixed(2)+" &euro;").replace('.',',');
 	document.getElementById("delivery_price").innerHTML=((delivery_price/100.0).toFixed(2)+" &euro;").replace('.',',');
 	item.disabled=false;
