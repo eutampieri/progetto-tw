@@ -5,10 +5,10 @@ $db = get_db();
 session_start();
 
 if(!isset($_SESSION["cart_id"])) {
-    $query = $db->prepare("SELECT MAX(id)+1 as id FROM cart;");
+    $query = $db->prepare("SELECT MAX(id)+1 as id FROM (SELECT id FROM cart UNION SELECT 0);");
     $query->execute();
     $_SESSION["cart_id"] = $query->fetchAll(PDO::FETCH_ASSOC)[0]["id"];
-    if(isset($_SESSION["user_id"])){
+		if(isset($_SESSION["user_id"])){
         $query = $db->prepare("UPDATE user SET cart_id = :id WHERE id = :uid;");
         $query->bindParam(":uid", $_SESSION["user_id"]);
         $query->bindParam(":id", $_SESSION["cart_id"]);
