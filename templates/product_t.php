@@ -17,8 +17,8 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
         <p>
             <?= $product["description"] ?>
         </p>
-        <a href="/cart.php" class="btn btn-primary showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i>
+        <button onclick="update_item_quantity_btn(this)" data-product="<?= $product["id"] ?>" data-increment="1" class="btn btn-primary showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i>
             Aggiungi al carrello
-        </a>
+        </button>
     </section>
 </main>
