@@ -19,9 +19,34 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
 } else if(isset($_SESSION["payment_intent"])) {
     if($stripe->get_payment_status($_SESSION["payment_intent"])) {
         $stripe->capture_payment($_SESSION["payment_intent"]);
-        echo "Pagamento ok";
+
+        // Disassociate user from cart (DB)
+        $stmt = $db->prepare("UPDATE user SET cart_id = NULL WHERE id = :id");
+        $stmt->bindParam(":id", $_SESSION["user_id"]);
+        $stmt->execute();
+        // Create order
+        $stmt = $db->prepare("INSERT INTO `order` VALUES(NULL, :cart_id, :user_id, NULL, NULL, :payment_id");
+        $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
+        $stmt->bindParam(":user_id", $_SESSION["user_id"]);
+        $stmt->bindParam(":payment_id", $_SESSION["payment_intent"]);
+        $stmt->execute();
+
+        // Add order inserted event
+        $order_id = intval($db->lastInsertId());
+        $stmt = $db->prepare("INSERT INTO order_update VALUES(:ts, \"Ordine inserito\", :order_id)");
+        $stmt->bindValue(":ts", time());
+        $stmt->bindParam(":order_id", $order_id);
+        $stmt->execute();
+
+        // Unset session variables
+        unset($_SESSION["payment_intent"]);
+        unset($_SESSION["cart_id"]);
+
+        $show_payment_successful_message = true;
+
     } else {
-        echo "Pagamento fallito";
+        $_SESSION["payment_failed"] = true;
+        header("Location: /cart.php");
     }
 } else {
     http_response_code(303);
