@@ -38,6 +38,8 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         $stmt->bindParam(":order_id", $order_id);
         $stmt->execute();
 
+        // TODO Add payment received event (from Stripe)
+
         // Unset session variables
         unset($_SESSION["payment_intent"]);
         unset($_SESSION["cart_id"]);

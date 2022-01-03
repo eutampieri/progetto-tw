@@ -9,7 +9,7 @@
 	$order_query->bindParam(":order_id", $order_id);
 	$order_query->execute();
 	$res['order'] = $order_query->fetch(PDO::FETCH_ASSOC);
-	$updates_query = $db->query("select * from order_update where order_id = :order_id");
+	$updates_query = $db->query("select * from order_update where order_id = :order_id order by `timestamp` desc");
 	$updates_query->bindParam(":order_id", $order_id);
 	$updates_query->execute();
 	$res['updates'] = $updates_query->fetchAll(PDO::FETCH_ASSOC);
