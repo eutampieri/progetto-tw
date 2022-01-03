@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="/res/main.css">
+<link rel="stylesheet" href="/res/css/style.css">
