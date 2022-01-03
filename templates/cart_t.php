@@ -18,6 +18,11 @@ async function update_cart(item) {
 	document.getElementById("delivery_price").innerHTML=((delivery_price/100.0).toFixed(2)+" &euro;").replace('.',',');
 	item.disabled=false;
 }
+function add(item_id, delta) {
+	let item = document.getElementById(item_id);
+	item.value = parseInt(item.value)+delta;
+	update_cart(item);
+}
 </script>
 <h1>Checkout</h1>
 <form id="cart" method="POST" action="pay.php">
@@ -29,7 +34,13 @@ async function update_cart(item) {
 		</div>
 		<div class="col-9 col-lg-10">
 			<h2><?= $cart_item['title'] ?></h2>
-			<p><label>quantity <input id="<?= $cart_item['product_id']?>" type="number" style="width:3em;" min=0 step=1 value="<?= $cart_item['quantity'] ?>" data-oldvalue="<?= $cart_item['quantity'] ?>" onchange="update_cart(this);" /></label> x <?= price_to_string($cart_item['price']) ?></p>
+			<p>
+				<label for="<?= $cart_item['product_id']?>">quantity</label>
+				<button type="button" class="btn btn-outline-primary btn-sm ms-1 font-monospace d-md-none" onclick=add(<?= $cart_item['product_id']?>,-1)>-</button>
+				<button type="button" class="btn btn-outline-primary btn-sm me-1 font-monospace d-md-none" onclick=add(<?= $cart_item['product_id']?>,1)>+</button>
+
+				<input id="<?= $cart_item['product_id']?>" type="number" style="width:3em;" min=0 step=1 value="<?= $cart_item['quantity'] ?>" data-oldvalue="<?= $cart_item['quantity'] ?>" onchange="update_cart(this);" /> x <?= price_to_string($cart_item['price']) ?>
+			</p>
 		</div>
 	</div>
 	<?php endforeach; ?>
