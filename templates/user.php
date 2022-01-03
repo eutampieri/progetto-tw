@@ -24,7 +24,12 @@
         <tr>
             <td scope="col"><?= date("%d/%m/%Y %H:%M", intval($order["date"])) ?></td>
             <td scope="col"><?= $order["id"] ?></td>
-            <td scope="col">// TODO</td>
+            <td scope="col">
+                <a class="btn btn-info" role="button" href="/order_status.php?order_id=<?= $order["id"] ?>">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    Traccia l'ordine
+                </a>
+            </td>
         </tr>
         <?php endforeach;
         if(count($orders) == 0): ?>
