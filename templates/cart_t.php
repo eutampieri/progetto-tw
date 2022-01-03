@@ -5,10 +5,10 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
 <form id="cart">
 	<?php foreach($cart as $cart_item): ?>
 	<div class="row">
-		<div class = "col-4">
+		<div class = "col-1 w-100">
 			<img src="/image.php?id=<?= $product["id"] ?>" alt=""></a>
 		</div>
-		<div class = "col-8">
+		<div class = "col-11">
 			<h2><?= $cart_item['title'] ?></h2>
 			<p><label>quantity <input id="product-<?= $cart_item['id']?>-quantity" type="number" value="<?= $cart_item['quantity'] ?>" /></label> x <?= price_to_string($cart_item['price']) ?></p>
 		</div>
