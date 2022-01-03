@@ -44,4 +44,11 @@ class Stripe
             "payment_intent" => $resp["payment_intent"]
         ];
     }
+    function get_payment_status($intent) {
+        $resp = generic_request("https://api.stripe.com/v1/payment_intents/$intent", "", ["Authorization: Basic ".base64_encode($this->secret.':')]);
+        return $resp["amount"] == $resp["amount_capturable"] && $resp["amount_received"] == 0;
+    }
+    function capture_payment($intent) {
+        generic_request("https://api.stripe.com/v1/payment_intents/$intent/capture", "", ["Authorization: Basic ".base64_encode($this->secret.':')], "POST");
+    }
 }
