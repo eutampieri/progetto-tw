@@ -1,8 +1,8 @@
 <h2>I tuoi dati</h2>
 <form>
     <div class="mb-3">
-        <label for="nome" class="form-label">Nome</label>
-        <input type="password" name="name" class="form-control" id="name" value="<?= $user["name"] ?>">
+        <label for="name" class="form-label">Nome</label>
+        <input type="text" name="name" class="form-control" id="name" value="<?= $user["name"] ?>">
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Indirizzo email</label>
