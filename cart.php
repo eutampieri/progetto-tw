@@ -17,7 +17,6 @@ if(isset($_GET["json"])) {
         "items" => $cart,
     ]);
 } else {
-    $hide_cart = true;
     $page_title = "Carrello";
     $head_template = "page_head.php";
     $body_template = "page.php";
