@@ -26,13 +26,13 @@ async function update_item_quantity(product, quantity) {
 	return await fetch("/edit-cart.php?product_id=" + product + "&quantity=" + quantity).then(x => x.json());
 }
 
+function update_cart_items(cart) {
+	let count = cart.items.map(x => parseInt(x.quantity)).reduce((p, x) => { return x + p; });
+	document.getElementById("cart-count").innerHTML = count.toString();
+}
 
 async function update_item_quantity_btn(button) {
 	let cart = await update_item_quantity(button.dataset["product"], button.dataset["increment"]);
-	/*for (const item of cart.items) {
-		if(item.id == button.dataset["product"]) {
-			document.getElementById("")
-			break;
-		}
-	}*/
+
+	update_cart_items(cart);
 }
