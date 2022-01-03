@@ -54,3 +54,18 @@ class Stripe
 function calc_delivery_price($cart) {
     return 500;
 }
+
+function calc_cart_size($cart) {
+    $size = 0;
+    foreach($cart as $item) {
+        $size += intval($item["quantity"]);
+    }
+    return $size;
+}
+
+function load_cart_size($db, $cart_id) {
+    $stmt = $db->prepare("SELECT SUM(quantity) AS n FROM cart WHERE id = :id");
+    $stmt->bindParam(":id", $cart_id);
+    $stmt->execute();
+    return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["n"]);
+}
