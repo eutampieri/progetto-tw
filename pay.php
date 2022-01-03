@@ -29,11 +29,49 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     header("Location: ".$stripe_session["url"]);
 } else if(isset($_SESSION["payment_intent"])) {
     if($stripe->get_payment_status($_SESSION["payment_intent"])) {
+        $db = get_db();
         $stripe->capture_payment($_SESSION["payment_intent"]);
-        echo "Pagamento ok";
+
+        // Disassociate user from cart (DB)
+        $stmt = $db->prepare("UPDATE user SET cart_id = NULL WHERE id = :id");
+        $stmt->bindParam(":id", $_SESSION["user_id"]);
+        $stmt->execute();
+        // Create order
+        $stmt = $db->prepare("INSERT INTO `order`(cart_id, `user_id`, payment_id) VALUES(:cart_id, :user_id, :payment_id)");
+        $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
+        $stmt->bindParam(":user_id", $_SESSION["user_id"]);
+        $stmt->bindParam(":payment_id", $_SESSION["payment_intent"]);
+        $stmt->execute();
+
+        // Add order inserted event
+        $order_id = intval($db->lastInsertId());
+        $stmt = $db->prepare("INSERT INTO order_update VALUES(:ts, \"Ordine inserito\", :order_id)");
+        $stmt->bindValue(":ts", time());
+        $stmt->bindParam(":order_id", $order_id);
+        $stmt->execute();
+
+        // TODO Add payment received event (from Stripe)
+
+        // Unset session variables
+        unset($_SESSION["payment_intent"]);
+        unset($_SESSION["cart_id"]);
+
+        $show_payment_successful_message = true;
+        $page_title = "Conferma ordine";
+        $head_template = "page_head.php";
+        $body_template = "page.php";
+        $page_content_template = "order_status_t.php";
+        require_once("templates/main.php");
+
     } else {
-        echo "Pagamento fallito";
+        $_SESSION["payment_failed"] = true;
+        http_response_code(303);
+        header("Location: /cart.php");
     }
+} else if(isset($_GET["cancel"])) {
+    $_SESSION["payment_failed"] = true;
+    http_response_code(303);
+    header("Location: /cart.php");
 } else {
     http_response_code(303);
     header("Location: /");

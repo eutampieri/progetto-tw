@@ -26,6 +26,12 @@ function add(item_id, delta) {
 </script>
 <h1>Checkout</h1>
 <form id="cart" method="POST" action="pay.php">
+	<?php if(isset($_SESSION["payment_failed"])): ?>
+		<div class="alert alert-danger" role="alert">
+			Il pagamento è fallito, riprova.
+		</div>
+		<?php unset($_SESSION["payment_failed"]);
+	endif; ?>
 	<input type="hidden" name="create_checkout">
 	<?php foreach($cart as $cart_item): ?>
 	<div class="row">
