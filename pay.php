@@ -43,6 +43,11 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         unset($_SESSION["cart_id"]);
 
         $show_payment_successful_message = true;
+        $page_title = "Conferma ordine";
+        $head_template = "page_head.php";
+        $body_template = "page.php";
+        $page_content_template = "order_status_t.php";
+        require_once("templates/main.php");
 
     } else {
         $_SESSION["payment_failed"] = true;
