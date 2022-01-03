@@ -5,6 +5,11 @@ session_start();
 $stripe = new Stripe("sk_test_wWygRumClv9lRAWpxQyLyzgD00oDfv5zAD");
 
 if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
+    if(!isset($_SESSION["user_id"])) {
+        $_SESSION["payment_pending"] = true;
+        // TODO redirect to login
+        die();
+    }
     $pdo = get_db();
     $cart_query = $pdo->query("select cart.id, product_id, quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
     $cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
