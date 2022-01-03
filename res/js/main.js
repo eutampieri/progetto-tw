@@ -21,3 +21,18 @@ async function display_order(order_id) {
 	});
 	return res;
 }
+
+async function update_item_quantity(product, quantity) {
+	return await fetch("/edit-cart.php?product_id=" + product + "&quantity=" + quantity).then(x => x.json());
+}
+
+
+async function update_item_quantity_btn(button) {
+	let cart = await update_item_quantity(button.dataset["product"], button.dataset["increment"]);
+	/*for (const item of cart.items) {
+		if(item.id == button.dataset["product"]) {
+			document.getElementById("")
+			break;
+		}
+	}*/
+}
