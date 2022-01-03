@@ -1,11 +1,11 @@
 <?php
-	require_once("utils");
+	require_once("utils.php");
 	$db = get_db();
 	$order_id = $_GET['order_id'];
-	if !is_numeric($order_id) {
+	if(!is_numeric($order_id)) {
 		die("order_id must be a number");
 	}
-	$order_query = $db->query("select * from order, express_courier where order.id = :order_id and express_courier.id = order.express_courier_id");
+	$order_query = $db->query("select * from `order`, express_courier where `order`.id = :order_id and express_courier.id = `order`.express_courier_id");
 	$order_query->bindParam(":order_id", $order_id);
 	$order_query->execute();
 	$res['order'] = $order_query->fetch(PDO::FETCH_ASSOC);
