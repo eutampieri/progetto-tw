@@ -5,7 +5,8 @@ function price_to_string($eurocents, $separator = ',') {
 }
 
 function get_db() {
-    $database = new PDO("sqlite:db.sqlite");
+    $config = json_decode(file_get_contents("db_conf.json"), true);
+    $database = new PDO("mysql:host=".$config["host".";dbname=".$config["name"], $config["username"], $config["password"]);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $database;
 }
