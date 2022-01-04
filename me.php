@@ -9,6 +9,11 @@ if(!isset($_SESSION["user_id"])) {
 		die();
 }
 
+$cart_count = 0;
+if(isset($_SESSION["cart_id"])) {
+    $cart_count = load_cart_size($db, $_SESSION["cart_id"]);
+}
+
 $stmt = $db->prepare("SELECT `name`, `email` FROM `user` WHERE id = :id");
 $stmt->bindParam(":id", $_SESSION["user_id"]);
 $stmt->execute();
