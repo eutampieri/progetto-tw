@@ -5,8 +5,8 @@ $db = get_db();
 session_start();
 
 if(!isset($_SESSION["user_id"])) {
-		header("Location: /login.php");
-		die();
+    header("Location: /login.php");
+    die();
 }
 
 $cart_count = 0;
@@ -19,10 +19,10 @@ $stmt->bindParam(":id", $_SESSION["user_id"]);
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if(count($users) != 1) {
-		unset($_SESSION["user_id"]);
-		unset($_SESSION["cart_id"]);
-		header("Location: /login.php");
-		die();
+    unset($_SESSION["user_id"]);
+    unset($_SESSION["cart_id"]);
+    header("Location: /login.php");
+    die();
 }
 $user = $users[0];
 

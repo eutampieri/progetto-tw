@@ -5,7 +5,6 @@ session_start();
 $stripe = new Stripe("sk_test_wWygRumClv9lRAWpxQyLyzgD00oDfv5zAD");
 
 if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
-		error_log(json_encode($_SESSION));
     if(!isset($_SESSION["user_id"])) {
         $_SESSION["payment_pending"] = true;
         header("Location: /login.php");
@@ -50,11 +49,11 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         $stmt->bindValue(":ts", time());
         $stmt->bindParam(":order_id", $order_id);
         $stmt->execute();
-				
-				$cart_query = $db->prepare("select cart.id, product_id, quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
-				$cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
-				$cart_query->execute();
-				$cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
+
+        $cart_query = $db->prepare("select cart.id, product_id, quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
+        $cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
+        $cart_query->execute();
+        $cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
 
         // TODO Add payment received event (from Stripe)
 
