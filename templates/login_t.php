@@ -9,7 +9,11 @@
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
   </div>
-  <button type="submit" class="btn btn-primary">Entra</button>
-	<a href="/signup.php">Non sei ancora un utente? Registrati</a>
+  <div class="text-center mt-3">
+    <button type="submit" class="btn btn-primary">Entra</button>
+    <hr>
+    <p class="text-muted">Non sei ancora un utente?</p>
+    <a href="/signup.php">Registrati</a>
+  </div>
 </form>
 
