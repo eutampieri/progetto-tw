@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(dirname(__FILE__))."/utils.php");
 ?>
-<div class="family d-flex flex-wrap justify-content-around">
+<div class="d-flex flex-wrap justify-content-around">
   <?php foreach($products as $product): ?>
   <div class="card m-2 product" >
     <a href="/product.php?id=<?= $product["id"] ?>">
