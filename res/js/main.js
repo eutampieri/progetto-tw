@@ -1,5 +1,18 @@
 "use strict";
 
+function formatDate(date) {
+	let formatted = date.getDate().toString().padStart(2, "0");
+	formatted += "/";
+	formatted += (date.getMonth() + 1).toString().padStart(2, "0");
+	formatted += "/";
+	formatted += date.getFullYear().toString().padStart(4, "0");
+	formatted += " ";
+	formatted += date.getHours().toString().padStart(2, "0");
+	formatted += ":";
+	formatted += date.getMinutes().toString().padStart(2, "0");
+	return formatted;
+}
+
 async function display_order(order_id, previous_heading_level) {
 	let hStart = 0;
 	if (previous_heading_level !== undefined) {
@@ -39,13 +52,32 @@ async function display_order(order_id, previous_heading_level) {
 				". Il codice di tracciamento è <pre>" + data.order.tracking_number + "</pre>.";
 			res.appendChild("alert");
 		}
-		for (let y in data["updates"]) {
-			let p = document.createElement("p");
-			let t1 = document.createTextNode("timestamp: " + data["updates"][y]["timestamp"]);
-			let t2 = document.createTextNode("update: " + data["updates"][y]["status"]);
-			p.appendChild(t1);
-			p.appendChild(t2);
-			res.appendChild(p);
+		res.appendChild((() => {
+			let x = document.createElement("h" + (2 + hStart).toString());
+			x.appendChild(document.createTextNode("Aggiornamenti sul tuo ordine"));
+			return x;
+		})())
+		let table = document.createElement("table");
+		table.classList.add("table");
+		let thead = document.createElement("thead");
+		thead.innerHTML = '<tr><th scope="col">Data</th><th scope="col">Stato</th><th scope="col">Luogo</th></tr>';
+		table.appendChild(thead);
+		let tbody = document.createElement("tbody");
+		table.appendChild(tbody);
+		res.appendChild(table);
+		for (const update of data.updates) {
+			let row = document.createElement("tr");
+			let dateCol = document.createElement("td");
+			dateCol.appendChild(document.createTextNode(formatDate(new Date(parseInt(update.timestamp) * 1000))))
+			row.appendChild(dateCol);
+			let actionCol = document.createElement("td");
+			actionCol.appendChild(document.createTextNode(update.status))
+			row.appendChild(actionCol);
+			let placeCol = document.createElement("td");
+			placeCol.appendChild(document.createTextNode(update.place))
+			row.appendChild(placeCol);
+			row.childNodes.forEach(x => x.scope = "col");
+			tbody.appendChild(row);
 		}
 	});
 	return res;
