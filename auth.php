@@ -51,7 +51,13 @@ if ($_POST["action"]==="login") {
 	}
 } else if ($_POST["action"]==="signup") {
 	if(user_create($_POST["name"],$_POST["email"],$_POST["password"])) {
-		header("Location: /login.php");
+		user_login($_POST["email"],$_POST["password"]);
+		if(isset($_SESSION["payment_pending"]) && $_SESSION["payment_pending"] === true) {
+			unset($_SESSION["payment_pending"]);
+			header("Location: /pay.php?create_checkout");
+		} else {
+			header("Location: /");
+		}
 	} else {
 		header("Location: /signup.php");
 	}
