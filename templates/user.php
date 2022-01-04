@@ -1,5 +1,6 @@
 <h2>I tuoi dati</h2>
-<form>
+<form action = "/update_user.php" method="POST">
+    <input type="hidden" name="action" value="user_details">
     <div class="mb-3">
         <label for="name" class="form-label">Nome</label>
         <input type="text" name="name" class="form-control" id="name" value="<?= $user["name"] ?>">
