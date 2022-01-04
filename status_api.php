@@ -5,7 +5,7 @@
 	if(!is_numeric($order_id)) {
 		die("order_id must be a number");
 	}
-	$order_query = $db->prepare("select * from `order`, express_courier where `order`.id = :order_id and express_courier.id = `order`.express_courier_id");
+	$order_query = $db->prepare("select * from `order` left join express_courier on express_courier_id = `order`.express_courier_id where `order`.id=:order_id");
 	$order_query->bindParam(":order_id", $order_id);
 	$order_query->execute();
 	$res['order'] = $order_query->fetch(PDO::FETCH_ASSOC);

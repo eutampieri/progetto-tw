@@ -5,6 +5,7 @@ session_start();
 $stripe = new Stripe("sk_test_wWygRumClv9lRAWpxQyLyzgD00oDfv5zAD");
 
 if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
+		error_log(json_encode($_SESSION));
     if(!isset($_SESSION["user_id"])) {
         $_SESSION["payment_pending"] = true;
         header("Location: /login.php");
@@ -16,10 +17,10 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     $cart_query->execute();
     $cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $db->prepare("SELECT email FROM user WHERE id = :id");
+    $stmt = $pdo->prepare("SELECT email FROM user WHERE id = :id");
     $stmt->bindParam(":id", $_SESSION["user_id"]);
     $stmt->execute();
-    $email = $db->fetchAll(PDO::FETCH_ASSOC)[0]["email"];
+    $email = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]["email"];
 
     $delivery_price = calc_delivery_price($cart);
     array_push($cart, ["name" => "Shipping cost", "quantity" => 1, "price" => $delivery_price]);
@@ -42,13 +43,18 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         $stmt->bindParam(":user_id", $_SESSION["user_id"]);
         $stmt->bindParam(":payment_id", $_SESSION["payment_intent"]);
         $stmt->execute();
-
+				
         // Add order inserted event
         $order_id = intval($db->lastInsertId());
         $stmt = $db->prepare("INSERT INTO order_update VALUES(:ts, \"Ordine inserito\", :order_id)");
         $stmt->bindValue(":ts", time());
         $stmt->bindParam(":order_id", $order_id);
         $stmt->execute();
+				
+				$cart_query = $db->prepare("select cart.id, product_id, quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
+				$cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
+				$cart_query->execute();
+				$cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
 
         // TODO Add payment received event (from Stripe)
 
