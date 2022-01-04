@@ -3,7 +3,7 @@
 	<input type="hidden" name="action" value="login" />
   <div class="form-group">
     <label for="email">Indirizzo email</label>
-    <input type="email" class="form-control" id="email" name="email" placeholder="Inserire indirizzo email" />
+    <input type="email" class="form-control" id="email" name="email" placeholder="La tua mail" />
   </div>
   <div class="form-group">
     <label for="password">Password</label>

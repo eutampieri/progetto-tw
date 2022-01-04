@@ -2,12 +2,12 @@
 <form method="post" action="auth.php">
 	<input type="hidden" name="action" value="signup" />
   <div class="form-group">
-    <label for="name">Nome utente</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Inserire nome utente" />
+    <label for="name">Nome e cognome</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Il tuo nome" />
   </div>
   <div class="form-group">
     <label for="email">Indirizzo email</label>
-    <input type="email" class="form-control" id="email" name="email" placeholder="Inserire indirizzo email" />
+    <input type="email" class="form-control" id="email" name="email" placeholder="La tua email" />
 	</div>
   <div class="form-group">
     <label for="password">Password</label>
