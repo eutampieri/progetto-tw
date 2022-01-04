@@ -6,8 +6,10 @@
 	<?php endif; ?>
 <div class="family d-flex flex-wrap justify-content-around">
   <?php foreach($cart as $order_element): ?>
-    <img src="/image.php?id=<?= $order_element["product_id"] ?>" class="card-img-top" alt="">
-		<p>Quantity: <?= $order_element["quantity"] ?></p>
+		<div class="product">
+			<img src="/image.php?id=<?= $order_element["product_id"] ?>" class="card-img-top" alt="">
+			<p>Quantity: <?= $order_element["quantity"] ?></p>
+		</div>
   <?php endforeach; ?>
 </div>
 </main>
