@@ -25,7 +25,7 @@ function add(item_id, delta) {
 	update_cart(item);
 }
 </script>
-<h1>Checkout</h1>
+<h1>Carrello</h1>
 <form id="cart" method="POST" action="pay.php">
 	<?php if(isset($_SESSION["payment_failed"])): ?>
 		<div class="alert alert-danger" role="alert">
