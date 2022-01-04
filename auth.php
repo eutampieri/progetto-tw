@@ -29,7 +29,7 @@ function user_login(string $email, string $password) {
 			$setcart = $db->prepare("UPDATE cart SET id = :user_cart_id WHERE id = :session_cart_id");
 			$setcart->bindParam(":user_cart_id", $query["cart_id"]);
 			$setcart->bindParam(":session_cart_id", $_SESSION["cart_id"]);
-			$_SESSION["cart_id"]=null;
+			$_SESSION["cart_id"]=$query["cart_id"];
 		}
 		return true;
 	}
