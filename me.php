@@ -5,8 +5,8 @@ $db = get_db();
 session_start();
 
 if(!isset($_SESSION["user_id"])) {
-    die();
-    // TODO redirect to login page
+		header("Location: /login.php");
+		die();
 }
 
 $stmt = $db->prepare("SELECT `name`, `email` FROM `user` WHERE id = :id");
@@ -14,8 +14,10 @@ $stmt->bindParam(":id", $_SESSION["user_id"]);
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if(count($users) != 1) {
-    die();
-    // TODO Clean session since it's invalid and redirect
+		unset($_SESSION["user_id"]);
+		unset($_SESSION["cart_id"]);
+		header("Location: /login.php");
+		die();
 }
 $user = $users[0];
 

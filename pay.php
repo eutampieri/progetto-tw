@@ -7,7 +7,7 @@ $stripe = new Stripe("sk_test_wWygRumClv9lRAWpxQyLyzgD00oDfv5zAD");
 if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     if(!isset($_SESSION["user_id"])) {
         $_SESSION["payment_pending"] = true;
-        // TODO redirect to login
+        header("Location: /login.php");
         die();
     }
     $pdo = get_db();
