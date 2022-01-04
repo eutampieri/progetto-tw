@@ -30,6 +30,6 @@ $page_title = "Area personale";
 $head_template = "page_head.php";
 $body_template = "page.php";
 $page_content_template = "user.php";
-$products = $query->fetchAll(PDO::FETCH_ASSOC);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 require_once("templates/main.php");
 

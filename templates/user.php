@@ -11,6 +11,12 @@
   <button type="submit" class="btn btn-primary">Aggiorna</button>
 </form>
 <h2>I tuoi ordini</h2>
+<?php if(count($orders) == 0): ?>
+  <div class="alert alert-info" role="alert">
+    Sembra che tu non abbia ancora effettuato alcun ordine.
+    Potresti andare sulla <a href="/">homepage</a> per vedere se c'è qualcosa di interessante&hellip;
+	</div>
+<?php else: ?>
 <table class="table">
     <thead>
         <tr>
@@ -31,13 +37,8 @@
                 </a>
             </td>
         </tr>
-        <?php endforeach;
-        if(count($orders) == 0): ?>
-        <div class="alert alert-info" role="alert">
-            Sembra che tu non abbia ancora effettuato alcun ordine.
-            Potresti andare sulla <a href="/">homepage</a> per vedere se c'è qualcosa di interessante&hellip;
-        </div>
-        <?php endif; ?>
+				<?php endforeach; ?>
     </tbody>
 </table>
+<?php endif; ?>
 <?php

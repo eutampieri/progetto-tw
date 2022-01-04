@@ -1,7 +1,5 @@
 <?php
-require_once("auth.php");
-
-$page_title = "Home";
+$page_title = "Signup";
 $head_template = "page_head.php";
 $body_template = "page.php";
 $page_content_template = "signup_t.php";
