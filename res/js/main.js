@@ -25,6 +25,10 @@ async function display_order(order_id, previous_heading_level) {
 	fetch("/status_api.php?order_id=" + order_id).then(response => response.json()).then(data => {
 		let productList = document.createElement("section");
 		let productListHeading = document.createElement("h" + (2 + hStart).toString());
+		let cardInfo = document.createElement("p");
+		cardInfo.appendChild(document.createTextNode("Pagato con "));
+		cardInfo.appendChild(render_credit_card(data.payment_infos));
+		res.appendChild(cardInfo);
 		productListHeading.appendChild(document.createTextNode("Articoli nell'ordine"));
 		let productListContainer = document.createElement("div");
 		productListContainer.className = "d-flex flex-wrap justify-content-around";
@@ -125,4 +129,45 @@ async function update_item_quantity_btn(button) {
 	new bootstrap.Modal(create_go_to_cart_modal()).show();
 
 	update_cart_items(cart);
+}
+
+function render_credit_card(card) {
+	const icons = {
+		"amex": "cc-amex",
+		"diners": "cc-diners-club",
+		"discover": "cc-discover",
+		"jcb": "cc-jcb",
+		"mastercard": "cc-mastercard",
+		"unionpay": "credit-card",
+		"visa": "cc-visa",
+		"unknown": "credit-card",
+	}
+	const names = {
+		"amex": "American Express",
+		"diners": "Diners Club",
+		"discover": "Discover",
+		"jcb": "JCB",
+		"mastercard": "MasterCard",
+		"unionpay": "Union Pay",
+		"visa": "VISA",
+		"unknown": "",
+	}
+	let res = document.createElement("span");
+	let cardInfo = document.createElement("span");
+	cardInfo.classList.add("visually-hidden");
+	cardInfo.appendChild(document.createTextNode("Carta " + names[card.brand]))
+	res.appendChild(cardInfo);
+	let icon = document.createElement("i");
+	icon.className = "fa fa-" + icons[card.brand];
+	icon.ariaHidden = true;
+	res.appendChild(icon);
+	let separator = document.createElement("span");
+	separator.appendChild(document.createTextNode("\u25cf"));
+	separator.ariaLabel = " che termina con ";
+	separator.classList.add("m-1");
+	res.appendChild(separator);
+	let lastFour = document.createElement("span");
+	lastFour.appendChild(document.createTextNode(card.last4));
+	res.appendChild(lastFour);
+	return res;
 }
