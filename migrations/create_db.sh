@@ -70,7 +70,7 @@ for MIGRATION in `ls *.sql`
 do
 	if [[ $MIGRATION > $LAST_MIGRATION ]]
 	then
-		cat $MIGRATION > mysql -P $PORT -u $USER -h $HOST --password "$PASS" $DB_NAME
+		cat $MIGRATION | mysql -P $PORT -u $USER -h $HOST --password "$PASS" $DB_NAME
 		echo $MIGRATION > ".last"
 	fi
 done
