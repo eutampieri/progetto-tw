@@ -25,6 +25,10 @@ async function display_order(order_id, previous_heading_level) {
 	fetch("/status_api.php?order_id=" + order_id).then(response => response.json()).then(data => {
 		let productList = document.createElement("section");
 		let productListHeading = document.createElement("h" + (2 + hStart).toString());
+		let cardInfo = document.createElement("p");
+		cardInfo.appendChild(document.createTextNode("Pagato con "));
+		cardInfo.appendChild(render_credit_card(data.payment_infos));
+		res.appendChild(cardInfo);
 		productListHeading.appendChild(document.createTextNode("Articoli nell'ordine"));
 		let productListContainer = document.createElement("div");
 		productListContainer.className = "d-flex flex-wrap justify-content-around";
@@ -160,10 +164,10 @@ function render_credit_card(card) {
 	let separator = document.createElement("span");
 	separator.appendChild(document.createTextNode("\u25cf"));
 	separator.ariaLabel = " che termina con ";
-	separator.classList.add(m - 1);
+	separator.classList.add("m-1");
 	res.appendChild(separator);
 	let lastFour = document.createElement("span");
-	lastFour.appendChild(card.last4);
+	lastFour.appendChild(document.createTextNode(card.last4));
 	res.appendChild(lastFour);
 	return res;
 }
