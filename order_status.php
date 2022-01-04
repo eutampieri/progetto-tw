@@ -1,6 +1,8 @@
 <?php
 require_once("utils.php");
 
+session_start();
+
 $db = get_db();
 
 $order_id = $_GET["order_id"];
