@@ -57,7 +57,7 @@ function add(item_id, delta) {
 	</div>
 	<div class="row">
 		<div class="col">Totale ordine</div>
-		<div class="col" id="total_price"><?= price_to_string(array_reduce(array_map(fn($product):int => $product['price']*$product['quantity'],$cart), fn($a, $b):int => $a+$b)) ?></div>
+		<div class="col" id="total_price"><?= price_to_string($delivery_price + array_reduce(array_map(fn($product):int => $product['price']*$product['quantity'],$cart), fn($a, $b):int => $a+$b)) ?></div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12 col-md-3 m-auto"><button type="submit" class="w-100 mt-3 m-auto btn btn-primary m-2">Paga ora</button></div>
