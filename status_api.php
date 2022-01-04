@@ -13,6 +13,10 @@
 	$updates_query->bindParam(":order_id", $order_id);
 	$updates_query->execute();
 	$res['updates'] = $updates_query->fetchAll(PDO::FETCH_ASSOC);
+	$cart_query = $db->prepare("select * from cart where id = :cart_id");
+	$cart_query->bindParam(":cart_id", $res['order']["cart_id"]);
+	$cart_query->execute();
+	$res['cart'] = $cart_query->fetchAll(PDO::FETCH_ASSOC);
 
 	header("Content-Type: application/json");
 	echo json_encode($res);
