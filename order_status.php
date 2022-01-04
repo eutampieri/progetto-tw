@@ -1,6 +1,8 @@
 <?php
 require_once("utils.php");
 
+session_start();
+
 $order_id = $_GET["order_id"];
 
 $page_title = "Order status";
