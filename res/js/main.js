@@ -3,9 +3,31 @@
 async function display_order(order_id) {
 	let res = document.createElement("div");
 	fetch("/status_api.php?order_id=" + order_id).then(response => response.json()).then(data => {
+		let productList = document.createElement("section");
+		let productListHeading = document.createElement("h2");
+		productListHeading.appendChild(document.createTextNode("Articoli nell'ordine"));
+		let productListContainer = document.createElement("div");
+		productListContainer.className = "d-flex flex-wrap justify-content-around";
+		productList.appendChild(productListHeading);
+		productList.appendChild(productListContainer);
+		data.cart.map((x) => {
+			let container = document.createElement("div");
+			container.classList.add("product");
+			let img = document.createElement("img");
+			img.src = "/image.php?id=" + x.product_id;
+			img.alt = x.name;
+			container.classList.add("position-relative");
+			let quantity = document.createElement("span");
+			quantity.className = "position-absolute top-100 start-100 translate-middle badge rounded-pill bg-success";
+			quantity.appendChild(document.createTextNode(x.quantity));
+			container.appendChild(quantity);
+			container.appendChild(img);
+			return container;
+		}).forEach((x) => productListContainer.appendChild(x));
+		res.appendChild(productList);
 		for (let y in data["order"]) {
 			let p = document.createElement("p");
-			let t = document.createTextNode(y +": "+ data["order"][y]);
+			let t = document.createTextNode(y + ": " + data["order"][y]);
 			p.appendChild(t);
 			res.appendChild(p);
 		}
