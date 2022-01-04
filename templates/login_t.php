@@ -8,6 +8,7 @@
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
   </div>
-  <button type="submit" class="btn btn-primary">Login</button>
+  <button type="submit" class="btn btn-primary">Entra</button>
+	<a class="btn btn-primary" href="/signup.php" role="button">Registrati</a>
 </form>
 
