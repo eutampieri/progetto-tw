@@ -1,1 +1,3 @@
 *.sqlite
+migration/.last
+db_conf.json
