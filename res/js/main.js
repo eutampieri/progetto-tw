@@ -1,10 +1,17 @@
 "use strict";
 
-async function display_order(order_id) {
+async function display_order(order_id, previous_heading_level) {
+	let hStart = 0;
+	if (previous_heading_level !== undefined) {
+		hStart = parseInt(previous_heading_level);
+	}
 	let res = document.createElement("div");
+	let title = document.createElement("h" + (1 + hStart).toString());
+	title.appendChild(document.createTextNode("Ordine #" + order_id.toString()));
+	res.appendChild(title);
 	fetch("/status_api.php?order_id=" + order_id).then(response => response.json()).then(data => {
 		let productList = document.createElement("section");
-		let productListHeading = document.createElement("h2");
+		let productListHeading = document.createElement("h" + (2 + hStart).toString());
 		productListHeading.appendChild(document.createTextNode("Articoli nell'ordine"));
 		let productListContainer = document.createElement("div");
 		productListContainer.className = "d-flex flex-wrap justify-content-around";
@@ -25,11 +32,12 @@ async function display_order(order_id) {
 			return container;
 		}).forEach((x) => productListContainer.appendChild(x));
 		res.appendChild(productList);
-		for (let y in data["order"]) {
-			let p = document.createElement("p");
-			let t = document.createTextNode(y + ": " + data["order"][y]);
-			p.appendChild(t);
-			res.appendChild(p);
+		if (data.order.tracking_number !== null) {
+			let alert = document.createElement("div");
+			alert.className = "alert alert-info";
+			alert.innerHTML = "Il tuo ordine è stato spedito con " + data.order.courier_name +
+				". Il codice di tracciamento è <pre>" + data.order.tracking_number + "</pre>.";
+			res.appendChild("alert");
 		}
 		for (let y in data["updates"]) {
 			let p = document.createElement("p");
