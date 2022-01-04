@@ -41,6 +41,7 @@ session_start();
 if ($_POST["action"]==="login") {
 	if(user_login($_POST["email"],$_POST["password"])) {
 		if(isset($_SESSION["payment_pending"]) && $_SESSION["payment_pending"] === true) {
+			unset($_SESSION["payment_pending"]);
 			header("Location: /pay.php?create_checkout");
 		} else {
 			header("Location: /me.php");
