@@ -15,7 +15,7 @@
   <div class="alert alert-info" role="alert">
     Sembra che tu non abbia ancora effettuato alcun ordine.
     Potresti andare sulla <a href="/">homepage</a> per vedere se c'è qualcosa di interessante&hellip;
-	</div>
+    </div>
 <?php else: ?>
 <table class="table">
     <thead>
@@ -28,7 +28,7 @@
     <tbody>
         <?php foreach($orders as $order) :?>
         <tr>
-            <td scope="col"><?= date("%d/%m/%Y %H:%M", intval($order["date"])) ?></td>
+            <td scope="col"><?= date("d/m/Y H:i", intval($order["date"])) ?></td>
             <td scope="col"><?= $order["id"] ?></td>
             <td scope="col">
                 <a class="btn btn-info" role="button" href="/order_status.php?order_id=<?= $order["id"] ?>">
@@ -37,7 +37,7 @@
                 </a>
             </td>
         </tr>
-				<?php endforeach; ?>
+        <?php endforeach; ?>
     </tbody>
 </table>
 <?php endif; ?>

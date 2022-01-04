@@ -4,7 +4,7 @@
 		Il tuo pagamento è riuscito. Trovi qui sotto i dettagli dell'ordine.
 	</div>
 	<?php endif; ?>
-<div class="family d-flex flex-wrap justify-content-around">
+<div class="d-flex flex-wrap justify-content-around">
   <?php foreach($cart as $order_element): ?>
 		<div class="product">
 			<img src="/image.php?id=<?= $order_element["product_id"] ?>" class="card-img-top" alt="">

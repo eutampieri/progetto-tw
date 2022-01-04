@@ -1,21 +1,83 @@
 "use strict";
 
-async function display_order(order_id) {
+function formatDate(date) {
+	let formatted = date.getDate().toString().padStart(2, "0");
+	formatted += "/";
+	formatted += (date.getMonth() + 1).toString().padStart(2, "0");
+	formatted += "/";
+	formatted += date.getFullYear().toString().padStart(4, "0");
+	formatted += " ";
+	formatted += date.getHours().toString().padStart(2, "0");
+	formatted += ":";
+	formatted += date.getMinutes().toString().padStart(2, "0");
+	return formatted;
+}
+
+async function display_order(order_id, previous_heading_level) {
+	let hStart = 0;
+	if (previous_heading_level !== undefined) {
+		hStart = parseInt(previous_heading_level);
+	}
 	let res = document.createElement("div");
+	let title = document.createElement("h" + (1 + hStart).toString());
+	title.appendChild(document.createTextNode("Ordine #" + order_id.toString()));
+	res.appendChild(title);
 	fetch("/status_api.php?order_id=" + order_id).then(response => response.json()).then(data => {
-		for (let y in data["order"]) {
-			let p = document.createElement("p");
-			let t = document.createTextNode(y + ": " + data["order"][y]);
-			p.appendChild(t);
-			res.appendChild(p);
+		let productList = document.createElement("section");
+		let productListHeading = document.createElement("h" + (2 + hStart).toString());
+		productListHeading.appendChild(document.createTextNode("Articoli nell'ordine"));
+		let productListContainer = document.createElement("div");
+		productListContainer.className = "d-flex flex-wrap justify-content-around";
+		productList.appendChild(productListHeading);
+		productList.appendChild(productListContainer);
+		data.cart.map((x) => {
+			let container = document.createElement("div");
+			container.classList.add("product");
+			let img = document.createElement("img");
+			img.src = "/image.php?id=" + x.product_id;
+			img.alt = x.name;
+			container.classList.add("position-relative");
+			let quantity = document.createElement("span");
+			quantity.className = "position-absolute top-100 start-100 translate-middle badge rounded-pill bg-success";
+			quantity.appendChild(document.createTextNode(x.quantity));
+			container.appendChild(quantity);
+			container.appendChild(img);
+			return container;
+		}).forEach((x) => productListContainer.appendChild(x));
+		res.appendChild(productList);
+		if (data.order.tracking_number !== null) {
+			let alert = document.createElement("div");
+			alert.className = "alert alert-info";
+			alert.innerHTML = "Il tuo ordine è stato spedito con " + data.order.courier_name +
+				". Il codice di tracciamento è <pre>" + data.order.tracking_number + "</pre>.";
+			res.appendChild("alert");
 		}
-		for (let y in data["updates"]) {
-			let p = document.createElement("p");
-			let t1 = document.createTextNode("timestamp: " + data["updates"][y]["timestamp"]);
-			let t2 = document.createTextNode("update: " + data["updates"][y]["status"]);
-			p.appendChild(t1);
-			p.appendChild(t2);
-			res.appendChild(p);
+		res.appendChild((() => {
+			let x = document.createElement("h" + (2 + hStart).toString());
+			x.appendChild(document.createTextNode("Aggiornamenti sul tuo ordine"));
+			return x;
+		})())
+		let table = document.createElement("table");
+		table.classList.add("table");
+		let thead = document.createElement("thead");
+		thead.innerHTML = '<tr><th scope="col">Data</th><th scope="col">Stato</th><th scope="col">Luogo</th></tr>';
+		table.appendChild(thead);
+		let tbody = document.createElement("tbody");
+		table.appendChild(tbody);
+		res.appendChild(table);
+		for (const update of data.updates) {
+			let row = document.createElement("tr");
+			let dateCol = document.createElement("td");
+			dateCol.appendChild(document.createTextNode(formatDate(new Date(parseInt(update.timestamp) * 1000))))
+			row.appendChild(dateCol);
+			let actionCol = document.createElement("td");
+			actionCol.appendChild(document.createTextNode(update.status))
+			row.appendChild(actionCol);
+			let placeCol = document.createElement("td");
+			placeCol.appendChild(document.createTextNode(update.place))
+			row.appendChild(placeCol);
+			row.childNodes.forEach(x => x.scope = "col");
+			tbody.appendChild(row);
 		}
 	});
 	return res;
