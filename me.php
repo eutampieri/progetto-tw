@@ -5,8 +5,13 @@ $db = get_db();
 session_start();
 
 if(!isset($_SESSION["user_id"])) {
+    header("Location: /login.php");
     die();
-    // TODO redirect to login page
+}
+
+$cart_count = 0;
+if(isset($_SESSION["cart_id"])) {
+    $cart_count = load_cart_size($db, $_SESSION["cart_id"]);
 }
 
 $stmt = $db->prepare("SELECT `name`, `email` FROM `user` WHERE id = :id");
@@ -14,8 +19,10 @@ $stmt->bindParam(":id", $_SESSION["user_id"]);
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if(count($users) != 1) {
+    unset($_SESSION["user_id"]);
+    unset($_SESSION["cart_id"]);
+    header("Location: /login.php");
     die();
-    // TODO Clean session since it's invalid and redirect
 }
 $user = $users[0];
 
@@ -28,6 +35,6 @@ $page_title = "Area personale";
 $head_template = "page_head.php";
 $body_template = "page.php";
 $page_content_template = "user.php";
-$products = $query->fetchAll(PDO::FETCH_ASSOC);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 require_once("templates/main.php");
 
