@@ -89,3 +89,5 @@ function load_cart_size($db, $cart_id) {
     $stmt->execute();
     return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["n"]);
 }
+
+function send_notification($user, $message) {}
