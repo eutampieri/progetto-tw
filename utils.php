@@ -90,4 +90,11 @@ function load_cart_size($db, $cart_id) {
     return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["n"]);
 }
 
-function send_notification($user, $message) {}
+function send_notification($user, $message) {
+    $db = get_db();
+    $query = $db->prepare("INSERT INTO `notification` (`user_id`, `message`, `status`) VALUES(:uid, :msg, 0)");
+    $query->bindParam(":uid", $user);
+    $query->bindParam(":msg", $message);
+    $stmt->execute();
+    return intval($db->lastInsertId());
+}
