@@ -105,7 +105,7 @@ function send_notification($user, $message, $status = 0) {
     $query->bindParam(":msg", $message);
     $query->bindParam(":status", $status);
     $query->bindValue(":now", time());
-    $stmt->execute();
+    $query->execute();
     $query = $db->prepare("SELECT `name`, `email` FROM `user` WHERE `id` = :id");
     $query->bindParam(":id", $user);
     $query->execute();
