@@ -1,25 +1,25 @@
 <header class="navbar navbar-expand-lg navbar-light bg-light mr-auto d-flex p-3">
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-		<i class="fa fa-bars" aria-hidden="true"></i>
+		<i class="fa fa-bars"></i>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarToggler">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item">
-				<a class="nav-link" href="/">Pagina iniziale</a>
+				<a class="nav-link" href="/"><i class="me-1 fa fa-home" aria-hidden="true"></i>Pagina iniziale</a>
 			</li>
 			<?php if(isset($_SESSION["user_id"])): ?>
 			<li class="nav-item">
-				<a class="nav-link" href="/me.php">La mia pagina personale</a>
+				<a class="nav-link" href="/me.php"><i class="me-1 fa fa-user" aria-hidden="true"></i>La mia pagina personale</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/logout.php"><i class="me-1 fa fa-user-times" aria-hidden="true"></i>Esci</a>
+				<a class="nav-link" href="/logout.php"><i class="me-1 fa fa-sign-out" aria-hidden="true"></i>Esci</a>
 			</li>
 			<?php else: ?>
 			<li class="nav-item">
 				<a class="nav-link" href="/signup.php"><i class="me-1 fa fa-user-plus" aria-hidden="true"></i>Registrati</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/login.php"><i class="me-1 fa fa-user" aria-hidden="true"></i>Entra</a>
+				<a class="nav-link" href="/login.php"><i class="me-1 fa fa-sign-in" aria-hidden="true"></i>Entra</a>
 			</li>
 		</ul>
 			<?php endif; ?>
