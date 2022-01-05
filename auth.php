@@ -13,6 +13,7 @@ function user_create(string $name, string $email, string $password) {
 		error_log("User creation failed: " . $e->getMessage());
 		return false;
 	}
+	send_notification(intval($db->lastInsertId()), "Ciao, $name! Grazie per esserti iscritto al nostro sito!",1);
 	return true;
 }
 
