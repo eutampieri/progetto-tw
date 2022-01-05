@@ -1,3 +1,20 @@
+<h2>Notifiche</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Messaggio</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($notifications as $notification) :?>
+        <tr>
+            <td scope="col"><?= date("d/m/Y H:i", intval($notification["date"])) ?></td>
+            <td scope="col"><?= $notification["message"] ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 <h2>I tuoi dati</h2>
 <form action = "/update_user.php" method="POST">
     <input type="hidden" name="action" value="user_details">
