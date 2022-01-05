@@ -104,6 +104,10 @@ function send_notification($user, $message) {
     $query->bindParam(":uid", $user);
     $query->bindParam(":msg", $message);
     $stmt->execute();
+    $query = $db->prepare("SELECT `name`, `email` FROM `user` WHERE `id` = :id");
+    $query->bindParam(":id", $user);
+    $query->execute();
+    $user = $query->fetch(PDO::FETCH_ASSOC);
     $mail = new PHPMailer(true);
     $conf = json_decode(file_get_contents("mail_conf.json"), true);
     try {
@@ -115,7 +119,7 @@ function send_notification($user, $message) {
         $mail->SMTPSecure = 'ssl';
         $mail->Port = $conf["port"];
         $mail->setFrom('shop@chelli.tampieri.me', 'Chelli&Tampieri Shop');
-        $mail->addAddress($parti_contatto[1]);
+        $mail->addAddress($user["email"], $user["name"]);
         //Content
         $mail->Subject = 'Un aggiornamento dal nostro sito';
         $mail->Body    = $message;
