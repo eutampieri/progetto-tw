@@ -1,4 +1,12 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once 'PHPMailer/src/Exception.php';
+require_once 'PHPMailer/src/PHPMailer.php';
+require_once 'PHPMailer/src/SMTP.php';
+
 function price_to_string($eurocents, $separator = ',') {
     $euros = floatval($eurocents)/100;
     return number_format($euros, 2, $separator, '').' €';
@@ -96,5 +104,24 @@ function send_notification($user, $message) {
     $query->bindParam(":uid", $user);
     $query->bindParam(":msg", $message);
     $stmt->execute();
+    $mail = new PHPMailer(true);
+    $conf = json_decode(file_get_contents("mail_conf.json"), true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = $conf["host"];
+        $mail->SMTPAuth = true;
+        $mail->Username = $conf["user"];
+        $mail->Password = $conf["password"];
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = $conf["port"];
+        $mail->setFrom('shop@chelli.tampieri.me', 'Chelli&Tampieri Shop');
+        $mail->addAddress($parti_contatto[1]);
+        //Content
+        $mail->Subject = 'Un aggiornamento dal nostro sito';
+        $mail->Body    = $message;
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Failed to send email ".$e);
+    }
     return intval($db->lastInsertId());
 }
