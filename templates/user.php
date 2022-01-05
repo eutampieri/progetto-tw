@@ -11,6 +11,19 @@
     </div>
   <button type="submit" class="btn btn-primary">Aggiorna</button>
 </form>
+<h2>Cambia password</h2>
+<form action = "/update_user.php" method="POST">
+    <input type="hidden" name="action" value="password">
+    <div class="mb-3">
+        <label for="oldpassword" class="form-label">Password attuale</label>
+        <input type="password" name="oldpassword" class="form-control" id="oldpassword">
+    </div>
+    <div class="mb-3">
+        <label for="newpassword" class="form-label">Nuova password</label>
+        <input type="password" name="newpassword" class="form-control" id="newpassword">
+    </div>
+  <button type="submit" class="btn btn-primary">Aggiorna</button>
+</form>
 <h2>I tuoi ordini</h2>
 <?php if(count($orders) == 0): ?>
   <div class="alert alert-info" role="alert">
