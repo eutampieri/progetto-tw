@@ -80,7 +80,7 @@ class Stripe
 }
 
 function calc_delivery_price($cart) {
-    return 500;
+    return count($cart) > 0 ? 500 : 0;
 }
 
 function calc_cart_size($cart) {
