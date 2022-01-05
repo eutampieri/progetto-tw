@@ -1,1 +1,1 @@
-CREATE TABLE `notification` (`id` INTEGER PRIMARY KEY, `user_id` INTEGER NOT NULL, `message` TEXT NOT NULL, `status` INTEGER NOT NULL);
+CREATE TABLE `notification` (`id` INTEGER PRIMARY KEY, `user_id` INTEGER NOT NULL, `message` TEXT NOT NULL, `date` INTEGER NOT NULL, `status` INTEGER NOT NULL);

@@ -98,11 +98,13 @@ function load_cart_size($db, $cart_id) {
     return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["n"]);
 }
 
-function send_notification($user, $message) {
+function send_notification($user, $message, $status = 0) {
     $db = get_db();
-    $query = $db->prepare("INSERT INTO `notification` (`user_id`, `message`, `status`) VALUES(:uid, :msg, 0)");
+    $query = $db->prepare("INSERT INTO `notification` (`user_id`, `message`, `status`, `date`) VALUES(:uid, :msg, :status, :now)");
     $query->bindParam(":uid", $user);
     $query->bindParam(":msg", $message);
+    $query->bindParam(":status", $status);
+    $query->bindValue(":now", time());
     $stmt->execute();
     $query = $db->prepare("SELECT `name`, `email` FROM `user` WHERE `id` = :id");
     $query->bindParam(":id", $user);
