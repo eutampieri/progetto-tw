@@ -2,3 +2,8 @@
 	max-width: 256px;
 	max-height: 256px;
 }
+
+.order img {
+	max-height: 128px;
+}
+

@@ -35,12 +35,12 @@ function add(item_id, delta) {
 	endif; ?>
 	<input type="hidden" name="create_checkout">
 	<?php foreach($cart as $cart_item): ?>
-	<div class="row">
+	<div class="row mb-2">
 		<div class="col-3 col-lg-2">
 			<img src="/image.php?id=<?= $cart_item["product_id"] ?>" alt="" class="w-100"></a>
 		</div>
 		<div class="col-9 col-lg-10">
-			<h2><?= $cart_item['title'] ?></h2>
+			<h2><?= $cart_item['name'] ?></h2>
 			<p>
 				<label for="<?= $cart_item['product_id']?>">quantity</label>
 				<button type="button" class="btn btn-outline-primary btn-sm ms-1 font-monospace d-md-none" onclick=add(<?= $cart_item['product_id']?>,-1)>-</button>
