@@ -27,6 +27,7 @@
 	unset($res['payment_infos']["exp_month"]);
 	unset($res['payment_infos']["exp_year"]);
 	$res["payment_infos"]["receipt"] = $stripe_data["charges"]["data"][0]["receipt_url"];
+	$res["payment_infos"]["total_amount"] = $stripe_data["amount"];
 
 	header("Content-Type: application/json");
 	echo json_encode($res);
