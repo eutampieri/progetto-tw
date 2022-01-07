@@ -19,6 +19,7 @@ async function display_order(order_id, previous_heading_level) {
 		hStart = parseInt(previous_heading_level);
 	}
 	let res = document.createElement("div");
+	res.classList.add("order");
 	let title = document.createElement("h" + (1 + hStart).toString());
 	title.appendChild(document.createTextNode("Ordine #" + order_id.toString()));
 	res.appendChild(title);
