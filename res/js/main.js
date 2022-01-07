@@ -171,3 +171,7 @@ function render_credit_card(card) {
 	res.appendChild(lastFour);
 	return res;
 }
+
+function priceToString(price) {
+	return ((price / 100.0).toFixed(2) + " &euro;").replace('.', ',');
+}

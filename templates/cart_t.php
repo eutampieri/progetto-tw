@@ -15,8 +15,8 @@ async function update_cart(item) {
 		}
 	}
 	// update_cart_items(cart);
-	document.getElementById("total_price").innerHTML=((total_price/100.0).toFixed(2)+" &euro;").replace('.',',');
-	document.getElementById("delivery_price").innerHTML=((delivery_price/100.0).toFixed(2)+" &euro;").replace('.',',');
+	document.getElementById("total_price").innerHTML=priceToString(total_price);
+	document.getElementById("delivery_price").innerHTML=priceToString(delivery_price);
 	item.disabled=false;
 }
 function add(item_id, delta) {
