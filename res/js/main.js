@@ -99,7 +99,7 @@ function create_go_to_cart_modal() {
 	<div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
-		<h5 class="modal-title">Vui andare al carrello?</h5>
+		<h5 class="modal-title">Vuoi andare al carrello?</h5>
 		</div>
 		<div class="modal-body">
 		</div>
