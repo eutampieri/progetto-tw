@@ -18,13 +18,14 @@ function user_create(string $name, string $email, string $password) {
 
 function user_login(string $email, string $password) {
 	$db = get_db();
-	$query = $db->prepare("select password, id, cart_id from user where email = :email");
+	$query = $db->prepare("select password, id, cart_id, administrator from user where email = :email");
 	$query->bindParam(":email", $email);
 	$query->execute();
 	$query = $query->fetch(PDO::FETCH_ASSOC);
 	error_log(json_encode($query));
 	if(!is_bool($query) && password_verify($password,$query["password"])) {
 		$_SESSION["user_id"]=$query["id"];
+		$_SESSION["admin"]=$query["administrator"];
 		if(!isset($_SESSION["cart_id"])){
 			$setcart = $db->prepare("UPDATE cart SET id = :user_cart_id WHERE id = :session_cart_id");
 			$setcart->bindParam(":user_cart_id", $query["cart_id"]);
