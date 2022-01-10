@@ -1,8 +1,8 @@
 <main class="row">
 	<h2><?= $page_title; ?></h2>
-	<section class="col-md-4">
-		<img class="w-100" src="/image.php?id=<?= $product["id"] ?>" />
-	</section>
+	<?php if($product["id"] !== null): ?>
+	<img alt="" class="w-100" src="/image.php?id=<?= $product["id"] ?>" />
+	<?php endif; ?>
 	<form enctype="multipart/form-data" action="/update_product.php" method="post">
 		<input name="id" type="hidden" value="<?= $product["id"] ?>" />
 		<div class="form-group">
@@ -22,19 +22,19 @@
 			<input id="p_qty" class="form-control" name="quantity" type="number" step=1 value="<?= $product["quantity"] ?>" /></label>
 		</div>
 		<div class="mb-3">
-			<label for="p_img" class="form-label">Default file input example</label>
+			<label for="p_img" class="form-label">Immagine</label>
 			<input class="form-control" type="file" id="p_img" name="image">
 		</div>
 <?php if(is_null($product["id"])): ?>
 		<div class="text-center mt-3">
-			<button type="submit" formaction="/insert_product.php" class="btn btn-primary">Insert product</button>
+			<button type="submit" formaction="/insert_product.php" class="btn btn-primary">Inserisci</button>
 			</div>
 <?php else: ?>
 		<div class="text-center mt-3">
-			<button type="submit" formaction="/update_product.php" class="btn btn-primary">Update product</button>
+			<button type="submit" formaction="/update_product.php" class="btn btn-primary">Aggiorna</button>
 		</div>
 		<div class="text-center mt-3">
-			<button type="submit" formaction="/delete_product.php" class="btn btn-primary">Delete product</button>
+			<button type="submit" formaction="/delete_product.php" class="btn btn-danger">Elimina</button>
 		</div>
 <?php endif ?>
 	</form>

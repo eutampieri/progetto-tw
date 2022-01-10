@@ -13,5 +13,8 @@ $insert_query->bindValue(":price",round($_POST["price"]*100));
 $insert_query->bindParam(":quantity",$_POST["quantity"]);
 $insert_query->execute();
 
+error_log($db->lastInsertId());
+update_product_image($db->lastInsertId());
+
 header("Location: /");
 

@@ -16,5 +16,7 @@ $update_query->bindParam(":quantity",$_POST["quantity"]);
 $update_query->bindParam(":id",$_POST["id"]);
 $update_query->execute();
 
+update_product_image($_POST["id"]);
+
 header("Location: /product.php?id=".$_POST["id"]);
 
