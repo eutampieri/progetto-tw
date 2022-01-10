@@ -1,6 +1,12 @@
 <main>
 	<section class="row order" id="order_display">
 	</section>
+	<section>
+		<h3>Dettagli cliente</h3>
+		<main>
+			Nome: <?= $user["name"]?>
+		</main>
+	</section>
 	<section class="row">
 		<h3>Aggiungi stato</h3>
 		<form method="post" action="/add_order_status.php">
@@ -34,7 +40,7 @@
 </main>
 <script>
 	async function load(){
-		document.getElementById("order_display").appendChild(await displayOrder(<?= $order_id ?>));
+		document.getElementById("order_display").appendChild(await displayOrder(<?= $order_id ?>, 3));
 	}
 	load();
 </script>

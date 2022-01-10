@@ -14,6 +14,20 @@ $couriers = $query->fetchAll(PDO::FETCH_ASSOC);
 
 $order_id = $_GET["order_id"];
 
+$query = $db->prepare("SELECT user_id FROM `order` WHERE id = :id");
+$stmt->bindParam(":id", $order_id);
+$stmt->execute();
+$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if(count($res) != 1) {
+	http_response_code(404);
+	echo "Ordine non trovato";
+	die();
+}
+$query = $db->prepare("SELECT * FROM user WHERE id = :id");
+$stmt->bindParam(":id", $res[0]["user_id"]);
+$stmt->execute();
+$user = $stmt->fetch();
+
 $page_title = "Modifica ordine";
 $head_template = "page_head.php";
 $body_template = "page.php";

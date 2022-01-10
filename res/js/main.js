@@ -14,7 +14,7 @@ function formatDate(date) {
 }
 
 async function displayOrder(order_id, previous_heading_level) {
-	let hStart = 0;
+	let hStart = 1;
 	if (previous_heading_level !== undefined) {
 		hStart = parseInt(previous_heading_level);
 	}
