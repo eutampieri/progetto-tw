@@ -89,3 +89,15 @@ function load_cart_size($db, $cart_id) {
     $stmt->execute();
     return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["n"]);
 }
+
+function poste_tracking($tracking_num) {
+    $res = json_decode(http_request("https://www.poste.it/online/dovequando/DQ-REST/ricercasemplice", json_encode([
+        "tipoRichiedente" => "WEB",
+        "codiceSpedizione" => $tracking_num,
+        "periodoRicerca" => 1,
+    ]), ["Content-Type: application/json"], "POST"), true);
+    if(!isset($res["listaMovimenti"])) {
+        return [];
+    }
+    return array_map(fn($x) => ["timestamp" => $x["dataOra"]/1000, "status" => $x["statoLavorazione"], "place" => $x["luogo"]], $res["listaMovimenti"]);
+}

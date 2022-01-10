@@ -29,6 +29,10 @@
 	$res["payment_infos"]["receipt"] = $stripe_data["charges"]["data"][0]["receipt_url"];
 	$res["payment_infos"]["total_amount"] = $stripe_data["amount"];
 
+	if($res["order"]["courier_name"] === "Poste Italiane") {
+		$res['updates'] = array_merge($res['updates'], poste_tracking($res["order"]["tracking_number"]));
+	}
+
 	header("Content-Type: application/json");
 	echo json_encode($res);
 ?>
