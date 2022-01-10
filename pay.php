@@ -17,7 +17,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
     $stmt->execute();
 
-    $cart_query = $pdo->prepare("select cart.id, product_id, min(product.quantity, cart.quantity) as quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
+    $cart_query = $pdo->prepare("select cart.id, product_id, least(product.quantity, cart.quantity) as quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id AND product.id = cart.product_id");
     $cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
     $cart_query->execute();
     $cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
