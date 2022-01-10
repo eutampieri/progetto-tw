@@ -6,16 +6,20 @@
 	<form action="/update_product.php" method="post">
 		<input name="id" type="hidden" value="<?= $product["id"] ?>" />
 		<div class="form-group">
-			<label>Nome <input name="name" type="text" value="<?= $product["name"] ?>"/></label>
+			<label for="p_name">Nome</label>
+			<input id="p_name" class="form-control" name="name" type="text" value="<?= $product["name"] ?>"/>
 		</div>
 		<div class="form-group">
-			<label>Descrizione <input name="description" type="text" value="<?= $product["description"] ?>" /></label>
+			<label for="p_desc">Descrizione</label>
+			<textarea id="p_desc" class="form-control" name="description"><?= $product["description"] ?></textarea>
 		</div>
 		<div class="form-group">
-			<label>Prezzo in EUR <input name="price" type="number" step=0.01 value="<?= $product["price"]/100 ?>" /></label>
+			<label for="p_price">Prezzo in EUR</label>
+			<input id="p_price" class="form-control" name="price" type="number" step=0.01 value="<?= $product["price"]/100 ?>" />
 		</div>
 		<div class="form-group">
-			<label>Quantità <input name="quantity" type="number" step=1 value="<?= $product["quantity"] ?>" /></label>
+			<label for="p_qty">Quantità</label>
+			<input id="p_qty" class="form-control" name="quantity" type="number" step=1 value="<?= $product["quantity"] ?>" /></label>
 		</div>
 <?php if(is_null($product["id"])): ?>
 		<div class="text-center mt-3">
