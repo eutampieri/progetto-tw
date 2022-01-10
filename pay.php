@@ -33,7 +33,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         $stripe->capture_payment($_SESSION["payment_intent"]);
 
         //Fix quantities in cart
-        $stmt = $db->prepare("UPDATE cart SET quantity=(SELECT quantity FROM product WHERE id=product_id) WHERE id = :cart_id");
+        $stmt = $db->prepare("UPDATE cart SET quantity=MIN(quantity, (SELECT quantity FROM product WHERE id=product_id)) WHERE id = :cart_id");
         $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
         $stmt->execute();
 
