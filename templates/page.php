@@ -1,6 +1,6 @@
 <header class="navbar navbar-expand-lg navbar-light bg-light mr-auto d-flex p-3">
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-		<i class="fa fa-bars"></i>
+		<i class="fa fa-bars" aria-hidden="true"></i>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarToggler">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">

@@ -33,7 +33,7 @@ async function display_order(order_id, previous_heading_level) {
 		productListHeading.appendChild(document.createTextNode("Articoli nell'ordine"));
 		let productListContainer = document.createElement("div");
 		productListContainer.className = "d-flex flex-wrap justify-content-around";
-		productListContainer.style= "margin-bottom: 1em";
+		productListContainer.style = "margin-bottom: 1em";
 		productList.appendChild(productListHeading);
 		productList.appendChild(productListContainer);
 		data.cart.map((x) => {
