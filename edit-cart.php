@@ -5,7 +5,7 @@ $db = get_db();
 session_start();
 
 if(!isset($_SESSION["cart_id"])) {
-    $query = $db->prepare("SELECT MAX(id)+1 as id FROM (SELECT id FROM cart UNION SELECT 0);");
+    $query = $db->prepare("SELECT MAX(id)+1 as id FROM (SELECT id FROM cart UNION SELECT 0) minid;");
     $query->execute();
     $_SESSION["cart_id"] = $query->fetchAll(PDO::FETCH_ASSOC)[0]["id"];
 		if(isset($_SESSION["user_id"])){
@@ -16,7 +16,7 @@ if(!isset($_SESSION["cart_id"])) {
     }
 }
 
-$stmt = $db->prepare("SELECT MAX(quantity) AS q FROM (SELECT quantity FROM cart WHERE id = :id AND product_id=:pid UNION SELECT 0);");
+$stmt = $db->prepare("SELECT MAX(quantity) AS q FROM (SELECT quantity FROM cart WHERE id = :id AND product_id=:pid UNION SELECT 0) minqty;");
 $stmt->bindParam(":id", $_SESSION["cart_id"]);
 $stmt->bindParam(":pid", $_GET["product_id"]);
 $stmt->execute();

@@ -1,1 +1,1 @@
-INSERT INTO product VALUES(NULL, "Lorem Ipsum", "lorem ipsum abc", 1099, NULL, 10, 0);
+INSERT INTO product(name, description, price) VALUES("Lorem Ipsum", "lorem ipsum abc", 1099);

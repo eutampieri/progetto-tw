@@ -1,2 +1,4 @@
 *.sqlite
+migration/.last
+db_conf.json
 mail_conf.json

@@ -13,7 +13,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     $pdo = get_db();
 
     //Fix quantities in cart
-    $stmt = $pdo->prepare("UPDATE cart SET quantity=MIN(quantity, (SELECT quantity FROM product WHERE id=product_id)) WHERE id = :cart_id");
+    $stmt = $pdo->prepare("UPDATE cart SET quantity=(SELECT LEAST(product.quantity, cart.quantity) FROM product WHERE id=product_id) WHERE id = :cart_id;");
     $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
     $stmt->execute();
 
@@ -29,7 +29,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
 
     $delivery_price = calc_delivery_price($cart);
     array_push($cart, ["name" => "Spese di spedizione", "quantity" => 1, "price" => $delivery_price]);
-    $stripe_session = $stripe->create_session($cart, "https://example.com", "https://example.com", $email);
+    $stripe_session = $stripe->create_session($cart, "https://chelli.tampieri.me/pay.php", "https://chelli.tampieri.me/pay.php?cancel", $email);
     $_SESSION["payment_intent"] = $stripe_session["payment_intent"];
     http_response_code(303);
     header("Location: ".$stripe_session["url"]);
