@@ -11,7 +11,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         die();
     }
     $pdo = get_db();
-    $cart_query = $pdo->prepare("select cart.id, product_id, quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
+    $cart_query = $pdo->prepare("select cart.id, product_id, min(product.quantity, cart.quantity) as quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
     $cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
     $cart_query->execute();
     $cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
@@ -22,7 +22,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     $email = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]["email"];
 
     $delivery_price = calc_delivery_price($cart);
-    array_push($cart, ["name" => "Shipping cost", "quantity" => 1, "price" => $delivery_price]);
+    array_push($cart, ["name" => "Spese di spedizione", "quantity" => 1, "price" => $delivery_price]);
     $stripe_session = $stripe->create_session($cart, "https://example.com", "https://example.com", $email);
     $_SESSION["payment_intent"] = $stripe_session["payment_intent"];
     http_response_code(303);
@@ -31,6 +31,11 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     if($stripe->get_payment_status($_SESSION["payment_intent"])) {
         $db = get_db();
         $stripe->capture_payment($_SESSION["payment_intent"]);
+
+        //Fix quantities in cart
+        $stmt = $db->prepare("UPDATE cart SET quantity=(SELECT quantity FROM product WHERE id=product_id) WHERE id = :cart_id");
+        $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
+        $stmt->execute();
 
         // Disassociate user from cart (DB)
         $stmt = $db->prepare("UPDATE user SET cart_id = NULL WHERE id = :id");
