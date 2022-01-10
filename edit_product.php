@@ -12,7 +12,7 @@ $products = $query->fetchAll(PDO::FETCH_ASSOC);
 
 if(count($products) === 1) {
     $product = $products[0];
-    $page_title = "Edit ".$product["name"];
+    $page_title = "Modifica ".$product["name"];
     $head_template = "page_head.php";
     $body_template = "page.php";
     $page_content_template = "edit_product_t.php";
