@@ -20,27 +20,27 @@
 		<?php if(isset($_SESSION) && $_SESSION["admin"]==1): ?>
         <p class="alert alert-info">Sei un amministratore, puoi <a href="/add_admin.php">elevare altri utenti ad amministratore</a></p>
     <?php endif;?>
-    <input type="hidden" name="action" value="user_details">
+    <input required type="hidden" name="action" value="user_details">
     <div class="mb-3">
         <label for="name" class="form-label">Nome</label>
-        <input type="text" name="name" class="form-control" id="name" value="<?= $user["name"] ?>">
+        <input required type="text" name="name" class="form-control" id="name" value="<?= $user["name"] ?>">
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Indirizzo email</label>
-      <input type="email" name="email" class="form-control" id="email" value="<?= $user["email"] ?>">
+      <input required type="email" name="email" class="form-control" id="email" value="<?= $user["email"] ?>">
     </div>
   <button type="submit" class="btn btn-primary">Aggiorna</button>
 </form>
 <h2>Cambia password</h2>
 <form action = "/update_user.php" method="POST">
-    <input type="hidden" name="action" value="password">
+    <input required type="hidden" name="action" value="password">
     <div class="mb-3">
         <label for="oldpassword" class="form-label">Password attuale</label>
-        <input type="password" name="oldpassword" class="form-control" id="oldpassword">
+        <input required type="password" name="oldpassword" class="form-control" id="oldpassword">
     </div>
     <div class="mb-3">
         <label for="newpassword" class="form-label">Nuova password</label>
-        <input type="password" name="newpassword" class="form-control" id="newpassword">
+        <input required type="password" name="newpassword" class="form-control" id="newpassword">
     </div>
   <button type="submit" class="btn btn-primary">Aggiorna</button>
 </form>
