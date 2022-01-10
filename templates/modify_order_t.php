@@ -12,6 +12,25 @@
 			<button type="submit" class="btn btn-primary">Aggiungi</button>
 		</form>	
 	</section>
+	<section class="row">
+		<h3>Imposta numero di spedizione</h3>
+		<form method="post" action="/set_tracking_number.php">
+		<input required type="hidden" name="order_id" value="<?= $order_id ?>" />
+			<div class="form-group">
+				<label for="tracking_number">Numero di tracciamento</label>
+				<input required type="text" class="form-control" id="tracking_number" name="tracking_number" placeholder="Numero di tracciamento" />
+			</div>
+			<label for="courier">Corriere</label>
+			<div class="form-group">
+				<select name="courier" id="courier" class="form-control">
+<?php foreach($couriers as $courier): ?>
+					<option value="<?= $courier["id"] ?>"><?= $courier["name"] ?></option>
+<?php endforeach; ?>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Modifica</button>
+		</form>	
+	</section>
 </main>
 <script>
 	async function load(){

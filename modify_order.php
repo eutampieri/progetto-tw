@@ -7,6 +7,10 @@ if(!(isset($_SESSION["admin"]) && $_SESSION["admin"]==1)) {
 	http_response_code(401);
 	die("unauthorized request");
 }
+$db = get_db();
+$query = $db->prepare("select * from express_courier");
+$query->execute();
+$couriers = $query->fetchAll(PDO::FETCH_ASSOC);
 
 $order_id = $_GET["order_id"];
 
