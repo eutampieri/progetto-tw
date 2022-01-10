@@ -20,5 +20,8 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
         <button onclick="update_item_quantity_btn(this)" data-product="<?= $product["id"] ?>" data-increment="1" class="btn btn-primary showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i>
             Aggiungi al carrello
         </button>
-    </section>
+		</section>
+    <?php if(isset($_SESSION["admin"]) && $_SESSION["admin"]==1):?>
+        <a href="/edit_product.php?id=<?= $product["id"] ?>">Edit product</a>
+    <?php endif; ?>
 </main>
