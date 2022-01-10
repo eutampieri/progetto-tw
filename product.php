@@ -4,7 +4,7 @@ require_once("utils.php");
 session_start();
 
 $db = get_db();
-$query = $db->prepare("SELECT * FROM product WHERE id = :id;");
+$query = $db->prepare("SELECT * FROM product WHERE id = :id AND deleted = 0;");
 $query->bindParam(":id", $_GET["id"]);
 $query->execute();
 

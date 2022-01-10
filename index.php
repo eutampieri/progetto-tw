@@ -4,7 +4,7 @@ require_once("utils.php");
 session_start();
 
 $db = get_db();
-$query = $db->prepare("SELECT * FROM product;");
+$query = $db->prepare("SELECT * FROM product WHERE deleted = 0;");
 $query->execute();
 
 $cart_count = 0;
