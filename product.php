@@ -16,8 +16,7 @@ if(isset($_SESSION["cart_id"])) {
 }
 
 if(count($products) == 1) {
-		$product = $products[0];
-		$product["price"]/=100;
+	$product = $products[0];
     $page_title = $product["name"];
     $head_template = "page_head.php";
     $body_template = "page.php";
