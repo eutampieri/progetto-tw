@@ -1,4 +1,4 @@
-<h1>Entra</h1>
+<h2>Entra</h2>
 <form method="post" action="auth.php">
 	<input type="hidden" name="action" value="login" />
   <div class="form-group">

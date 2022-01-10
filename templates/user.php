@@ -28,6 +28,19 @@
     </div>
   <button type="submit" class="btn btn-primary">Aggiorna</button>
 </form>
+<h2>Cambia password</h2>
+<form action = "/update_user.php" method="POST">
+    <input type="hidden" name="action" value="password">
+    <div class="mb-3">
+        <label for="oldpassword" class="form-label">Password attuale</label>
+        <input type="password" name="oldpassword" class="form-control" id="oldpassword">
+    </div>
+    <div class="mb-3">
+        <label for="newpassword" class="form-label">Nuova password</label>
+        <input type="password" name="newpassword" class="form-control" id="newpassword">
+    </div>
+  <button type="submit" class="btn btn-primary">Aggiorna</button>
+</form>
 <h2>I tuoi ordini</h2>
 <?php if(count($orders) == 0): ?>
   <div class="alert alert-info" role="alert">
@@ -47,10 +60,10 @@
     <tbody>
         <?php foreach($orders as $order) :?>
         <tr>
-            <td scope="col"><?= date("d/m/Y H:i", intval($order["date"])) ?></td>
-            <td scope="col"><?= $order["id"] ?></td>
-            <td scope="col"><?= price_to_string($order["total_amount"]) ?></td>
-            <td scope="col">
+            <td><?= date("d/m/Y H:i", intval($order["date"])) ?></td>
+            <td><?= $order["id"] ?></td>
+            <td><?= price_to_string($order["total_amount"]) ?></td>
+            <td>
                 <a class="btn btn-info" role="button" href="/order_status.php?order_id=<?= $order["id"] ?>">
                     <i class="fa fa-truck" aria-hidden="true"></i>
                     Traccia l'ordine

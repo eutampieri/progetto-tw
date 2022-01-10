@@ -22,6 +22,16 @@ $stmt->bindParam(":pid", $_GET["product_id"]);
 $stmt->execute();
 $old_quantity = intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["q"]);
 
+$stmt = $db->prepare("SELECT quantity FROM product WHERE id = :pid");
+$stmt->bindParam(":pid", $_GET["product_id"]);
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if(count($products) != 1) {
+    http_response_code(404);
+    die();
+}
+$product_max_qty = intval($products[0]["quantity"]);
+
 $query = null;
 if($old_quantity == 0) {
     $query = $db->prepare("INSERT INTO cart VALUES(:id, :pid, :qty)");
@@ -30,7 +40,7 @@ if($old_quantity == 0) {
 }
 $query->bindParam(":id", $_SESSION["cart_id"]);
 $query->bindParam(":pid", $_GET["product_id"]);
-$query->bindValue(":qty", intval($_GET["quantity"]) + $old_quantity);
+$query->bindValue(":qty", min($product_max_qty, intval($_GET["quantity"]) + $old_quantity));
 $query->execute();
 
 $stmt = $db->prepare("DELETE FROM cart WHERE quantity <= 0");
