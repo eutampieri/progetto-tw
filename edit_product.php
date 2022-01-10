@@ -2,6 +2,9 @@
 require_once("utils.php");
 
 session_start();
+if(!(isset($_SESSION) && $_SESSION["admin"]==1)) {
+	die("unauthorized request");
+}
 
 $db = get_db();
 $query = $db->prepare("SELECT * FROM product WHERE id = :id;");
