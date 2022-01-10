@@ -1,9 +1,12 @@
 <main class="row">
 	<h2><?= $page_title; ?></h2>
+	<div class="row">
 	<?php if($product["id"] !== null): ?>
-	<img alt="" class="w-100" src="/image.php?id=<?= $product["id"] ?>" />
+		<div class="col-md-4">
+			<img alt="" class="w-100" src="/image.php?id=<?= $product["id"] ?>" />
+		</div>
 	<?php endif; ?>
-	<form enctype="multipart/form-data" action="/update_product.php" method="post">
+	<form class="col-md-<?= $product["id"] !== null ? 8 : 12 ?>" enctype="multipart/form-data" action="/update_product.php" method="post">
 		<input name="id" type="hidden" value="<?= $product["id"] ?>" />
 		<div class="form-group">
 			<label for="p_name">Nome</label>
@@ -38,4 +41,5 @@
 		</div>
 <?php endif ?>
 	</form>
+</div>
 </main>
