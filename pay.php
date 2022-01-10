@@ -56,6 +56,11 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         $stmt->bindParam(":order_id", $order_id);
         $stmt->execute();
         send_notification($_SESSION["user_id"], "Abbiamo ricevuto il tuo ordine!");
+        $stmt = $db->prepare("SELECT id FROM user WHERE administrator = 1");
+        $stmt->execute();
+        foreach($stmt->fetchAll(PDO::FETCH_ASSOC) as $admin) {
+            send_notification($admin["id"], "Nuovo ordine inserito", 0, false);
+        }
 
         $cart_query = $db->prepare("select cart.id, product_id, cart.quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
         $cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
@@ -68,8 +73,6 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
             $stmt->bindParam(":id", $item["product_id"]);
             $stmt->execute();
         }
-
-        // TODO Add payment received event (from Stripe)
 
         // Unset session variables
         unset($_SESSION["payment_intent"]);

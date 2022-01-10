@@ -99,7 +99,7 @@ function load_cart_size($db, $cart_id) {
     return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]["n"]);
 }
 
-function send_notification($user, $message, $status = 0) {
+function send_notification($user, $message, $status = 0, $send = true) {
     $db = get_db();
     $query = $db->prepare("INSERT INTO `notification` (`user_id`, `message`, `status`, `date`) VALUES(:uid, :msg, :status, :now)");
     $query->bindParam(":uid", $user);
@@ -113,22 +113,24 @@ function send_notification($user, $message, $status = 0) {
     $user = $query->fetch(PDO::FETCH_ASSOC);
     $mail = new PHPMailer(true);
     $conf = json_decode(file_get_contents("mail_conf.json"), true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = $conf["host"];
-        $mail->SMTPAuth = true;
-        $mail->Username = $conf["user"];
-        $mail->Password = $conf["password"];
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = $conf["port"];
-        $mail->setFrom('shop@chelli.tampieri.me', 'Chelli&Tampieri Shop');
-        $mail->addAddress($user["email"], $user["name"]);
-        //Content
-        $mail->Subject = 'Un aggiornamento dal nostro sito';
-        $mail->Body    = $message;
-        $mail->send();
-    } catch (Exception $e) {
-        error_log("Failed to send email ".$e);
+    if($send) {
+        try {
+            $mail->isSMTP();
+            $mail->Host = $conf["host"];
+            $mail->SMTPAuth = true;
+            $mail->Username = $conf["user"];
+            $mail->Password = $conf["password"];
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = $conf["port"];
+            $mail->setFrom('shop@chelli.tampieri.me', 'Chelli&Tampieri Shop');
+            $mail->addAddress($user["email"], $user["name"]);
+            //Content
+            $mail->Subject = 'Un aggiornamento dal nostro sito';
+            $mail->Body    = $message;
+            $mail->send();
+        } catch (Exception $e) {
+            error_log("Failed to send email ".$e);
+        }
     }
     return intval($db->lastInsertId());
 }
