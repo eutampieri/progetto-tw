@@ -20,8 +20,8 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
         <button <?= intval($product["quantity"]) > 0 ? "": "disabled"?> onclick="update_item_quantity_btn(this)" data-product="<?= $product["id"] ?>" data-increment="1" class="btn btn-<?= intval($product["quantity"]) > 0 ? "primary": "danger"?> showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i>
             Aggiungi al carrello
         </button>
+        <?php if(isset($_SESSION["admin"]) && $_SESSION["admin"]==1):?>
+            <a role="button" class="btn btn-primary" href="/edit_product.php?id=<?= $product["id"] ?>"><i class="fa fa-pencil" aria-hidden="true"></i> Modifica prodotto</a>
+        <?php endif; ?>
 		</section>
-    <?php if(isset($_SESSION["admin"]) && $_SESSION["admin"]==1):?>
-        <a href="/edit_product.php?id=<?= $product["id"] ?>">Edit product</a>
-    <?php endif; ?>
 </main>
