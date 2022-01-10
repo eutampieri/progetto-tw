@@ -27,7 +27,8 @@
 	</nav>
 	<?php if(isset($cart_count)): ?>
 	<a class="btn btn-primary ms-auto me-1" href="/cart.php" role="button">
-		<i class="fa fa-shopping-cart" aria-label="Carrello: "></i>
+		<span class="visually-hidden">Carrello: </span>
+		<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 		<span id="cart-count" class="badge rounded-pill bg-light text-dark"><?= $cart_count ?></span>
 		<span class="visually-hidden"> elementi</span>
 	</a>
