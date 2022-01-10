@@ -3,6 +3,7 @@ require_once("utils.php");
 
 session_start();
 if(!(isset($_SESSION) && $_SESSION["admin"]==1)) {
+	http_response_code(401);
 	die("unauthorized request");
 }
 $db = get_db();
