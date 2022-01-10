@@ -4,7 +4,7 @@ require_once("utils.php");
 session_start();
 
 $db = get_db();
-$query = $db->prepare("SELECT * FROM product WHERE id = :id;");
+$query = $db->prepare("SELECT * FROM product WHERE id = :id AND deleted = 0;");
 $query->bindParam(":id", $_GET["id"]);
 $query->execute();
 
@@ -16,7 +16,7 @@ if(isset($_SESSION["cart_id"])) {
 }
 
 if(count($products) == 1) {
-    $product = $products[0];
+	$product = $products[0];
     $page_title = $product["name"];
     $head_template = "page_head.php";
     $body_template = "page.php";

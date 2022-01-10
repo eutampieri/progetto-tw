@@ -131,6 +131,7 @@ function send_notification($user, $message, $status = 0) {
     }
     return intval($db->lastInsertId());
 }
+
 function poste_tracking($tracking_num) {
     $res = json_decode(http_request("https://www.poste.it/online/dovequando/DQ-REST/ricercasemplice", json_encode([
         "tipoRichiedente" => "WEB",
@@ -141,4 +142,15 @@ function poste_tracking($tracking_num) {
         return [];
     }
     return array_map(fn($x) => ["timestamp" => $x["dataOra"]/1000, "status" => $x["statoLavorazione"], "place" => $x["luogo"]], $res["listaMovimenti"]);
+}
+
+function update_product_image($id) {
+    if(isset($_FILES["image"]) && isset($_FILES["image"]["tmp_name"])) {
+        $db = get_db();
+        $query = $db->prepare("UPDATE product SET `image` = :i WHERE id = :id");
+        $query->bindParam(":id", $id);
+        $query->bindValue(":i", file_get_contents($_FILES["image"]["tmp_name"]));
+        $query->execute();
+        unlink($_FILES["image"]["tmp_name"]);
+    }
 }
