@@ -8,7 +8,7 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
     <section class="col-md-8">
         <div class="d-flex justify-content-between">
             <h2>
-                <?= $product["name"] ?>
+                <?= str_replace("<br>", " ", $product["name"]) ?>
             </h2>
             <span class="price">
                 <?= price_to_string($product["price"])?>
