@@ -3,6 +3,11 @@ require_once("utils.php");
 
 session_start();
 
+if(!isset($_SESSION["user_id"])) {
+    header("Location: /");
+    die();
+}
+
 $order_id = $_GET["order_id"];
 
 $page_title = "Order status";
