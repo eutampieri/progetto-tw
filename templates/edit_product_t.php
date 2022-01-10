@@ -26,7 +26,7 @@
 		</div>
 		<div class="mb-3">
 			<label for="p_img" class="form-label">Immagine</label>
-			<input required class="form-control" type="file" id="p_img" name="image">
+			<input class="form-control" type="file" id="p_img" name="image">
 		</div>
 <?php if(is_null($product["id"])): ?>
 		<div class="text-center mt-3">
