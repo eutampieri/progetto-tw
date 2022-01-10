@@ -146,7 +146,7 @@ function poste_tracking($tracking_num) {
 }
 
 function update_product_image($id) {
-    if(isset($_FILES["image"]) && isset($_FILES["image"]["tmp_name"])) {
+    if(isset($_FILES["image"]) && isset($_FILES["image"]["tmp_name"]) && $_FILES["image"]["tmp_name"] !== "") {
         $db = get_db();
         $query = $db->prepare("UPDATE product SET `image` = :i WHERE id = :id");
         $query->bindParam(":id", $id);

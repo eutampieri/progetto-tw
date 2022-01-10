@@ -120,6 +120,7 @@ function createGoToCartModal(item, quantity) {
 	const body = root.querySelector("#cartModalProduct");
 	let product = document.createElement("p");
 	product.innerHTML = "Hai aggiunto " + quantity.toString() + " " + item.name + " al carrello";
+	body.appendChild(product);
 	document.getElementsByTagName("body")[0].appendChild(root);
 	return root;
 }
