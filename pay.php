@@ -11,7 +11,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         die();
     }
     $pdo = get_db();
-    
+
     //Fix quantities in cart
     $stmt = $pdo->prepare("UPDATE cart SET quantity=MIN(quantity, (SELECT quantity FROM product WHERE id=product_id)) WHERE id = :cart_id");
     $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
@@ -57,10 +57,17 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         $stmt->execute();
         send_notification($_SESSION["user_id"], "Abbiamo ricevuto il tuo ordine!");
 
-        $cart_query = $db->prepare("select cart.id, product_id, quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
+        $cart_query = $db->prepare("select cart.id, product_id, cart.quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
         $cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
         $cart_query->execute();
         $cart = $cart_query->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $db->prepare("UPDATE product SET quantity = quantity - :ordered WHERE id = :id");
+        foreach($cart as $item) {
+            $stmt->bindParam(":ordered", $item["quantity"]);
+            $stmt->bindParam(":id", $item["product_id"]);
+            $stmt->execute();
+        }
 
         // TODO Add payment received event (from Stripe)
 
