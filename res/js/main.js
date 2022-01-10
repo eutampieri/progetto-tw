@@ -81,7 +81,7 @@ async function display_order(order_id, previous_heading_level) {
 			let placeCol = document.createElement("td");
 			placeCol.appendChild(document.createTextNode(update.place))
 			row.appendChild(placeCol);
-			row.childNodes.forEach(x => x.scope = "col");
+			//row.childNodes.forEach(x => x.scope = "col");
 			tbody.appendChild(row);
 		}
 	});
