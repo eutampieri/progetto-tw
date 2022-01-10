@@ -1,3 +1,20 @@
+<h2>Notifiche</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Messaggio</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($notifications as $notification) :?>
+        <tr>
+            <td scope="col"><?= date("d/m/Y H:i", intval($notification["date"])) ?></td>
+            <td scope="col"><?= $notification["message"] ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 <h2>I tuoi dati</h2>
 <form action = "/update_user.php" method="POST">
     <input type="hidden" name="action" value="user_details">
@@ -23,6 +40,7 @@
         <tr>
             <th scope="col">Data</th>
             <th scope="col">Numero d'ordine</th>
+            <th scope="col">Totale ordine</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -31,6 +49,7 @@
         <tr>
             <td scope="col"><?= date("d/m/Y H:i", intval($order["date"])) ?></td>
             <td scope="col"><?= $order["id"] ?></td>
+            <td scope="col"><?= price_to_string($order["total_amount"]) ?></td>
             <td scope="col">
                 <a class="btn btn-info" role="button" href="/order_status.php?order_id=<?= $order["id"] ?>">
                     <i class="fa fa-truck" aria-hidden="true"></i>

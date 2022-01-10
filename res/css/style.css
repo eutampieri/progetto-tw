@@ -2,3 +2,7 @@
 	max-width: 256px;
 	max-height: 256px;
 }
+.order .product img {
+	max-width: 128px;
+	max-height: 128px;
+}
