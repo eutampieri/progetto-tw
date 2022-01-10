@@ -1,5 +1,5 @@
 <main class="row">
-	<h2>Edit product</h2>
+	<h2><?= $page_title; ?></h2>
 	<section class="col-md-4">
 		<img class="w-100" src="/image.php?id=<?= $product["id"] ?>" />
 	</section>
