@@ -60,7 +60,7 @@ async function displayOrder(order_id, previous_heading_level) {
 		}
 		res.appendChild((() => {
 			let x = document.createElement("h" + (2 + hStart).toString());
-			x.appendChild(document.createTextNode("Aggiornamenti sul tuo ordine"));
+			x.appendChild(document.createTextNode("Aggiornamenti sull'ordine"));
 			return x;
 		})())
 		let table = document.createElement("table");
