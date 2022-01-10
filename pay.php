@@ -11,6 +11,12 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
         die();
     }
     $pdo = get_db();
+    
+    //Fix quantities in cart
+    $stmt = $pdo->prepare("UPDATE cart SET quantity=MIN(quantity, (SELECT quantity FROM product WHERE id=product_id)) WHERE id = :cart_id");
+    $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
+    $stmt->execute();
+
     $cart_query = $pdo->prepare("select cart.id, product_id, min(product.quantity, cart.quantity) as quantity, name, price from cart, product where cart.id = :cart_id AND product_id = product.id");
     $cart_query->bindParam(":cart_id",$_SESSION["cart_id"]);
     $cart_query->execute();
@@ -31,11 +37,6 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     if($stripe->get_payment_status($_SESSION["payment_intent"])) {
         $db = get_db();
         $stripe->capture_payment($_SESSION["payment_intent"]);
-
-        //Fix quantities in cart
-        $stmt = $db->prepare("UPDATE cart SET quantity=MIN(quantity, (SELECT quantity FROM product WHERE id=product_id)) WHERE id = :cart_id");
-        $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
-        $stmt->execute();
 
         // Disassociate user from cart (DB)
         $stmt = $db->prepare("UPDATE user SET cart_id = NULL WHERE id = :id");
