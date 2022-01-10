@@ -17,6 +17,9 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
         <p>
             <?= $product["description"] ?>
         </p>
+        <?php if (intval($product["quantity"]) > 0):?>
+        <div role="alert" class="alert alert-danger">Il prodotto è esaurito</div>
+        <?php endif; ?>
         <button <?= intval($product["quantity"]) > 0 ? "": "disabled"?> onclick="updateItemQuantityButton(this)" data-product="<?= $product["id"] ?>" data-increment="1" class="btn btn-<?= intval($product["quantity"]) > 0 ? "primary": "danger"?> showlink"><i class="fa fa-cart-plus" aria-hidden="true"></i>
             Aggiungi al carrello
         </button>

@@ -42,7 +42,7 @@ function add(item_id, delta) {
 		<div class="col-9 col-lg-10">
 			<h3><?= $cart_item['name'] ?></h3>
 			<p>
-				<label for="<?= $cart_item['product_id']?>">quantity</label>
+				<label for="<?= $cart_item['product_id']?>">quantità</label>
 				<button type="button" class="btn btn-outline-primary btn-sm ms-1 font-monospace d-md-none" onclick=add(<?= $cart_item['product_id']?>,-1)>-</button>
 				<button type="button" class="btn btn-outline-primary btn-sm me-1 font-monospace d-md-none" onclick=add(<?= $cart_item['product_id']?>,1)>+</button>
 
