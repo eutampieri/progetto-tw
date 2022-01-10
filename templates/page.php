@@ -35,6 +35,11 @@
 			</li>
 		</ul>
 			<?php endif; ?>
+			<?php if(isset($_SESSION["admin"]) && $_SESSION["admin"]==1): ?>
+			<li class="nav-item">
+				<a class="nav-link" href="/add_product.php"></i>Aggiungi prodotto</a>
+			</li>
+			<?php endif; ?>
 	</nav>
 	<?php if(isset($cart_count)): ?>
 	<a class="btn btn-primary ms-auto me-1" href="/cart.php" role="button">
@@ -48,5 +53,5 @@
 <div class="container">
 	<?php
 		 require_once($page_content_template);
-		 ?>
+	?>
 </div>
