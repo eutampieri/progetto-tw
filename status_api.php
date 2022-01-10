@@ -10,11 +10,11 @@
 	$order_query = null;
 	if(!(isset($_SESSION) && $_SESSION["admin"]==1)) {
 		$order_query = $db->prepare("select cart_id, payment_id, tracking_number, name as courier_name from `order` left join express_courier on express_courier_id = `order`.express_courier_id where `order`.id=:order_id and `order`.user_id = :user_id");
+		$order_query->bindParam(":user_id", $_SESSION["user_id"]);
 	} else {
 		$order_query = $db->prepare("select cart_id, payment_id, tracking_number, name as courier_name from `order` left join express_courier on express_courier_id = `order`.express_courier_id where `order`.id=:order_id");
 	}
 	$order_query->bindParam(":order_id", $order_id);
-	$order_query->bindParam(":user_id", $_SESSION["user_id"]);
 	$order_query->execute();
 	$res['order'] = $order_query->fetch(PDO::FETCH_ASSOC);
 	if(count($res["order"]) == 0) {
