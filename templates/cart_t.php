@@ -15,8 +15,8 @@ async function update_cart(item) {
 		}
 	}
 	// update_cart_items(cart);
-	document.getElementById("total_price").innerHTML=((total_price/100.0).toFixed(2)+" &euro;").replace('.',',');
-	document.getElementById("delivery_price").innerHTML=((delivery_price/100.0).toFixed(2)+" &euro;").replace('.',',');
+	document.getElementById("total_price").innerHTML=priceToString(total_price);
+	document.getElementById("delivery_price").innerHTML=priceToString(delivery_price);
 	item.disabled=false;
 }
 function add(item_id, delta) {
@@ -35,7 +35,7 @@ function add(item_id, delta) {
 	endif; ?>
 	<input type="hidden" name="create_checkout">
 	<?php foreach($cart as $cart_item): ?>
-	<div class="row mb-2">
+	<div class="row my-1">
 		<div class="col-3 col-lg-2">
 			<img src="/image.php?id=<?= $cart_item["product_id"] ?>" alt="" class="w-100"></a>
 		</div>
