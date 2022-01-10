@@ -18,7 +18,7 @@
 <h2>I tuoi dati</h2>
 <form action = "/update_user.php" method="POST">
 		<?php if(isset($_SESSION) && $_SESSION["admin"]==1): ?>
-        <p>Sei un amministratore, puoi <a href="/add_admin.php">elevare altri utenti ad amministratore</a></p>
+        <p class="alert alert-info">Sei un amministratore, puoi <a href="/add_admin.php">elevare altri utenti ad amministratore</a></p>
     <?php endif;?>
     <input type="hidden" name="action" value="user_details">
     <div class="mb-3">
