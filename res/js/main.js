@@ -92,7 +92,7 @@ async function update_item_quantity(product, quantity) {
 	return await fetch("/edit-cart.php?product_id=" + product + "&quantity=" + quantity).then(x => x.json());
 }
 
-function create_go_to_cart_modal() {
+function create_go_to_cart_modal(item, quantity) {
 	for (const modal of document.getElementsByClassName("modal")) {
 		modal.remove();
 	}
@@ -102,7 +102,7 @@ function create_go_to_cart_modal() {
 		<div class="modal-header">
 		<h5 class="modal-title">Vuoi andare al carrello?</h5>
 		</div>
-		<div class="modal-body">
+		<div class="modal-body" id="cartModalProduct">
 		</div>
 		<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
@@ -116,6 +116,9 @@ function create_go_to_cart_modal() {
 	root.ariaLabel = "Vai al carrello";
 	root.ariaHidden = true;
 	root.innerHTML = modalContent;
+	const body = root.getElementById("cartModalProduct");
+	let product = document.createElement("p");
+	product.innerHTML = "Hai aggiunto " + quantity.toString() + " " + item.name + " al carrello";
 	document.getElementsByTagName("body")[0].appendChild(root);
 	return root;
 }
@@ -127,7 +130,8 @@ function update_cart_items(cart) {
 
 async function update_item_quantity_btn(button) {
 	let cart = await update_item_quantity(button.dataset["product"], button.dataset["increment"]);
-	new bootstrap.Modal(create_go_to_cart_modal()).show();
+	const item = cart.find((x) => parseInt(x.id) === parseInt(button.dataset["product"]));
+	new bootstrap.Modal(create_go_to_cart_modal(item), parseInt(button.dataset["increment"])).show();
 
 	update_cart_items(cart);
 }
