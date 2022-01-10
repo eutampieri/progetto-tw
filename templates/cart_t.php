@@ -33,7 +33,7 @@ function add(item_id, delta) {
 		</div>
 		<?php unset($_SESSION["payment_failed"]);
 	endif; ?>
-	<input type="hidden" name="create_checkout">
+	<input required type="hidden" name="create_checkout">
 	<?php foreach($cart as $cart_item): ?>
 	<div class="row my-1">
 		<div class="col-3 col-lg-2">
@@ -46,7 +46,7 @@ function add(item_id, delta) {
 				<button type="button" class="btn btn-outline-primary btn-sm ms-1 font-monospace d-md-none" onclick=add(<?= $cart_item['product_id']?>,-1)>-</button>
 				<button type="button" class="btn btn-outline-primary btn-sm me-1 font-monospace d-md-none" onclick=add(<?= $cart_item['product_id']?>,1)>+</button>
 
-				<input max="<?= $cart_item['max_qty'] ?>" id="<?= $cart_item['product_id']?>" type="number" style="width:3em;" min=0 step=1 value="<?= $cart_item['quantity'] ?>" data-oldvalue="<?= $cart_item['quantity'] ?>" onchange="update_cart(this);" /> x <?= price_to_string($cart_item['price']) ?>
+				<input required max="<?= $cart_item['max_qty'] ?>" id="<?= $cart_item['product_id']?>" type="number" style="width:3em;" min=0 step=1 value="<?= $cart_item['quantity'] ?>" data-oldvalue="<?= $cart_item['quantity'] ?>" onchange="update_cart(this);" /> x <?= price_to_string($cart_item['price']) ?>
 			</p>
 		</div>
 	</div>
