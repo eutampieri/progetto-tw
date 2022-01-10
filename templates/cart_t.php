@@ -5,7 +5,7 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
 async function update_cart(item) {
 	let diff=parseInt(item.value)-parseInt(item.dataset["oldvalue"]);
 	item.disabled=true;
-	let cart = await update_item_quantity(parseInt(item.id), diff);
+	let cart = await updateItemQuantity(parseInt(item.id), diff);
 	let delivery_price = cart.delivery_price;
 	let total_price=delivery_price;
 	for(const cart_item of cart.items) {
@@ -14,7 +14,7 @@ async function update_cart(item) {
 			item.dataset["oldvalue"]=cart_item.quantity;
 		}
 	}
-	// update_cart_items(cart);
+	// updateCartItems(cart);
 	document.getElementById("total_price").innerHTML=priceToString(total_price);
 	document.getElementById("delivery_price").innerHTML=priceToString(delivery_price);
 	item.disabled=false;

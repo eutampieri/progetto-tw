@@ -13,7 +13,7 @@ function formatDate(date) {
 	return formatted;
 }
 
-async function display_order(order_id, previous_heading_level) {
+async function displayOrder(order_id, previous_heading_level) {
 	let hStart = 0;
 	if (previous_heading_level !== undefined) {
 		hStart = parseInt(previous_heading_level);
@@ -28,7 +28,7 @@ async function display_order(order_id, previous_heading_level) {
 		let productListHeading = document.createElement("h" + (2 + hStart).toString());
 		let cardInfo = document.createElement("p");
 		cardInfo.appendChild(document.createTextNode("Pagato con "));
-		cardInfo.appendChild(render_credit_card(data.payment_infos));
+		cardInfo.appendChild(renderCreditCard(data.payment_infos));
 		res.appendChild(cardInfo);
 		productListHeading.appendChild(document.createTextNode("Articoli nell'ordine"));
 		let productListContainer = document.createElement("div");
@@ -89,11 +89,11 @@ async function display_order(order_id, previous_heading_level) {
 	return res;
 }
 
-async function update_item_quantity(product, quantity) {
+async function updateItemQuantity(product, quantity) {
 	return await fetch("/edit-cart.php?product_id=" + product + "&quantity=" + quantity).then(x => x.json());
 }
 
-function create_go_to_cart_modal(item, quantity) {
+function createGoToCartModal(item, quantity) {
 	for (const modal of document.getElementsByClassName("modal")) {
 		modal.remove();
 	}
@@ -124,20 +124,20 @@ function create_go_to_cart_modal(item, quantity) {
 	return root;
 }
 
-function update_cart_items(cart) {
+function updateCartItems(cart) {
 	let count = cart.items.map(x => parseInt(x.quantity)).reduce((p, x) => { return x + p; });
 	document.getElementById("cart-count").innerHTML = count.toString();
 }
 
-async function update_item_quantity_btn(button) {
-	let cart = await update_item_quantity(button.dataset["product"], button.dataset["increment"]);
+async function updateItemQuantityButton(button) {
+	let cart = await updateItemQuantity(button.dataset["product"], button.dataset["increment"]);
 	const item = cart.items.find((x) => parseInt(x.product_id) === parseInt(button.dataset["product"]));
-	new bootstrap.Modal(create_go_to_cart_modal(item, parseInt(button.dataset["increment"]))).show();
+	new bootstrap.Modal(createGoToCartModal(item, parseInt(button.dataset["increment"]))).show();
 
-	update_cart_items(cart);
+	updateCartItems(cart);
 }
 
-function render_credit_card(card) {
+function renderCreditCard(card) {
 	const icons = {
 		"amex": "cc-amex",
 		"diners": "cc-diners-club",

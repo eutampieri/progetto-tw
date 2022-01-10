@@ -23,6 +23,11 @@
 					<?php endif;?>
 				</a>
 			</li>
+			<?php if(isset($_SESSION["admin"]) && $_SESSION["admin"]==1): ?>
+			<li class="nav-item">
+				<a class="nav-link" href="/add_product.php"><i class="me-1 fa fa-plus" aria-hidden="true"></i>Aggiungi prodotto</a>
+			</li>
+			<?php endif; ?>
 			<li class="nav-item">
 				<a class="nav-link" href="/logout.php"><i class="me-1 fa fa-sign-out" aria-hidden="true"></i>Esci</a>
 			</li>
@@ -48,5 +53,5 @@
 <div class="container">
 	<?php
 		 require_once($page_content_template);
-		 ?>
+	?>
 </div>

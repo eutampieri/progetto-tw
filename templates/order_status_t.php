@@ -7,7 +7,7 @@
 </main>
 <script>
 	async function load(){
-		document.getElementById("main_content").appendChild(await display_order(<?= $order_id ?>));
+		document.getElementById("main_content").appendChild(await displayOrder(<?= $order_id ?>));
 	}
 	load();
 </script>

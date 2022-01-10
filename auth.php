@@ -19,13 +19,13 @@ function user_create(string $name, string $email, string $password) {
 
 function user_login(string $email, string $password) {
 	$db = get_db();
-	$query = $db->prepare("select password, id, cart_id from user where email = :email");
+	$query = $db->prepare("select password, id, cart_id, administrator from user where email = :email");
 	$query->bindParam(":email", $email);
 	$query->execute();
 	$query = $query->fetch(PDO::FETCH_ASSOC);
-	error_log(json_encode($query));
 	if(!is_bool($query) && password_verify($password,$query["password"])) {
 		$_SESSION["user_id"]=$query["id"];
+		$_SESSION["admin"]=$query["administrator"];
 		if(!isset($_SESSION["cart_id"])){
 			$setcart = $db->prepare("UPDATE cart SET id = :user_cart_id WHERE id = :session_cart_id");
 			$setcart->bindParam(":user_cart_id", $query["cart_id"]);
@@ -38,7 +38,6 @@ function user_login(string $email, string $password) {
 }
 
 session_start();
-// TODO: error/success messages
 if ($_POST["action"]==="login") {
 	if(user_login($_POST["email"],$_POST["password"])) {
 		if(isset($_SESSION["payment_pending"]) && $_SESSION["payment_pending"] === true) {
@@ -48,7 +47,7 @@ if ($_POST["action"]==="login") {
 			header("Location: /me.php");
 		}
 	} else {
-		header("Location: /login.php");
+		header("Location: /login.php?login_error=true");
 	}
 } else if ($_POST["action"]==="signup") {
 	if(user_create($_POST["name"],$_POST["email"],$_POST["password"])) {
