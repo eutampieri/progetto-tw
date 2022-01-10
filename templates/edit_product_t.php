@@ -3,7 +3,7 @@
 	<section class="col-md-4">
 		<img class="w-100" src="/image.php?id=<?= $product["id"] ?>" />
 	</section>
-	<form action="/update_product.php" method="post">
+	<form enctype="multipart/form-data" action="/update_product.php" method="post">
 		<input name="id" type="hidden" value="<?= $product["id"] ?>" />
 		<div class="form-group">
 			<label for="p_name">Nome</label>
@@ -20,6 +20,10 @@
 		<div class="form-group">
 			<label for="p_qty">Quantità</label>
 			<input id="p_qty" class="form-control" name="quantity" type="number" step=1 value="<?= $product["quantity"] ?>" /></label>
+		</div>
+		<div class="mb-3">
+			<label for="formFile" class="form-label">Default file input example</label>
+			<input class="form-control" type="file" id="formFile">
 		</div>
 <?php if(is_null($product["id"])): ?>
 		<div class="text-center mt-3">
