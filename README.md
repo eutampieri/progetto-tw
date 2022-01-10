@@ -1,4 +1,4 @@
-# Lorem Ipsum
+# Chelli&Tampieri shop
 
 ## Dependencies
 - php 7.4
