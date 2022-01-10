@@ -45,7 +45,7 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $db->prepare("SELECT `order`.id, MIN(order_update.timestamp) AS `date`, `order`.payment_id FROM `order`, order_update WHERE `order`.user_id = :uid AND `order`.id = order_update.order_id GROUP BY order_update.order_id ORDER BY `date` DESC");
 $stmt->bindParam(":uid", $_SESSION["user_id"]);
 $stmt->execute();
-$orders = array_map(order_add_price ,$stmt->fetchAll(PDO::FETCH_ASSOC));
+$orders = array_map('order_add_price' ,$stmt->fetchAll(PDO::FETCH_ASSOC));
 
 $page_title = "Area personale";
 $head_template = "page_head.php";
