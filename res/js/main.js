@@ -55,12 +55,12 @@ async function displayOrder(order_id, previous_heading_level) {
 			let alert = document.createElement("div");
 			alert.className = "alert alert-info";
 			alert.innerHTML = "Il tuo ordine è stato spedito con " + data.order.courier_name +
-				". Il codice di tracciamento è <pre>" + data.order.tracking_number + "</pre>.";
-			res.appendChild("alert");
+				". Il codice di tracciamento è <code>" + data.order.tracking_number + "</code>.";
+			res.appendChild(alert);
 		}
 		res.appendChild((() => {
 			let x = document.createElement("h" + (2 + hStart).toString());
-			x.appendChild(document.createTextNode("Aggiornamenti sul tuo ordine"));
+			x.appendChild(document.createTextNode("Aggiornamenti sull'ordine"));
 			return x;
 		})())
 		let table = document.createElement("table");

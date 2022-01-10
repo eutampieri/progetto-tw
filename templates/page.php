@@ -32,6 +32,9 @@
 				<a class="nav-link" href="/add_product.php"><i class="me-1 fa fa-plus" aria-hidden="true"></i>Aggiungi
 					prodotto</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/admin_orders.php"><i class="me-1 fa fa-list-alt" aria-hidden="true"></i>Ordini utenti</a>
+			</li>
 			<?php endif; ?>
 			<li class="nav-item">
 				<a class="nav-link" href="/logout.php"><i class="me-1 fa fa-sign-out" aria-hidden="true"></i>Esci</a>
