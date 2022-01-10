@@ -1,11 +1,12 @@
 <header class="navbar navbar-expand-lg navbar-light bg-light mr-auto d-flex p-3">
-	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+	<button class="navbar-toggler me-2S" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
 		<i class="fa fa-bars" aria-hidden="true"></i>
 	</button>
-	<div class="collapse navbar-collapse" id="navbarToggler">
+	<h1>C&T Shop</h1>
+	<nav class="collapse navbar-collapse" id="navbarToggler">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item">
-				<a class="nav-link" href="/">Pagina iniziale</a>
+				<a class="nav-link" href="/">Homepage</a>
 			</li>
 			<?php if(isset($_SESSION["user_id"])): ?>
 			<li class="nav-item">
@@ -23,7 +24,7 @@
 			</li>
 		</ul>
 			<?php endif; ?>
-	</div>
+	</nav>
 	<?php if(isset($cart_count)): ?>
 	<a class="btn btn-primary ms-auto me-1" href="/cart.php" role="button">
 		<i class="fa fa-shopping-cart" aria-label="Carrello: "></i>
