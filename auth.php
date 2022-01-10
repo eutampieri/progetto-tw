@@ -22,7 +22,6 @@ function user_login(string $email, string $password) {
 	$query->bindParam(":email", $email);
 	$query->execute();
 	$query = $query->fetch(PDO::FETCH_ASSOC);
-	error_log(json_encode($query));
 	if(!is_bool($query) && password_verify($password,$query["password"])) {
 		$_SESSION["user_id"]=$query["id"];
 		$_SESSION["admin"]=$query["administrator"];
