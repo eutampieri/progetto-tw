@@ -14,7 +14,7 @@
 	$updates_query->bindParam(":order_id", $order_id);
 	$updates_query->execute();
 	$res['updates'] = $updates_query->fetchAll(PDO::FETCH_ASSOC);
-	$cart_query = $db->prepare("select product_id, quantity, name from cart, product where cart.id = :cart_id and product.id = product_id");
+	$cart_query = $db->prepare("select product_id, cart.quantity, name from cart, product where cart.id = :cart_id and product.id = product_id");
 	$cart_query->bindParam(":cart_id", $res['order']["cart_id"]);
 	$cart_query->execute();
 	$res['cart'] = $cart_query->fetchAll(PDO::FETCH_ASSOC);
@@ -27,6 +27,11 @@
 	unset($res['payment_infos']["exp_month"]);
 	unset($res['payment_infos']["exp_year"]);
 	$res["payment_infos"]["receipt"] = $stripe_data["charges"]["data"][0]["receipt_url"];
+	$res["payment_infos"]["total_amount"] = $stripe_data["amount"];
+
+	if($res["order"]["courier_name"] === "Poste Italiane") {
+		$res['updates'] = array_merge($res['updates'], poste_tracking($res["order"]["tracking_number"]));
+	}
 
 	header("Content-Type: application/json");
 	echo json_encode($res);
