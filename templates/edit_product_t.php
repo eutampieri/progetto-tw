@@ -22,8 +22,8 @@
 			<input id="p_qty" class="form-control" name="quantity" type="number" step=1 value="<?= $product["quantity"] ?>" /></label>
 		</div>
 		<div class="mb-3">
-			<label for="formFile" class="form-label">Default file input example</label>
-			<input class="form-control" type="file" id="formFile">
+			<label for="p_img" class="form-label">Default file input example</label>
+			<input class="form-control" type="file" id="p_img" name="image">
 		</div>
 <?php if(is_null($product["id"])): ?>
 		<div class="text-center mt-3">
