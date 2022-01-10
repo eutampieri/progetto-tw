@@ -1,0 +1,9 @@
+<Files *.json>
+    Deny from all
+</Files>
+<Files templates/*>
+    Deny from all
+</Files>
+<Files migrations/*>
+    Deny from all
+</Files>
