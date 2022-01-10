@@ -1,4 +1,4 @@
-<h1>Registrati</h1>
+<h2>Registrati</h2>
 <form method="post" action="auth.php">
 	<input type="hidden" name="action" value="signup" />
   <div class="form-group">

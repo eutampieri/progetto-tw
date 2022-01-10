@@ -1,8 +1,9 @@
 <header class="navbar navbar-expand-lg navbar-light bg-light mr-auto d-flex p-3">
-	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+	<button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
 		<i class="fa fa-bars" aria-hidden="true"></i>
 	</button>
-	<div class="collapse navbar-collapse" id="navbarToggler">
+	<h1>C&T Shop</h1>
+	<nav class="collapse navbar-collapse" id="navbarToggler">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item">
 				<a class="nav-link" href="/"><i class="me-1 fa fa-home" aria-hidden="true"></i>Pagina iniziale</a>
@@ -34,10 +35,11 @@
 			</li>
 		</ul>
 			<?php endif; ?>
-	</div>
+	</nav>
 	<?php if(isset($cart_count)): ?>
 	<a class="btn btn-primary ms-auto me-1" href="/cart.php" role="button">
-		<i class="fa fa-shopping-cart" aria-label="Carrello: "></i>
+		<span class="visually-hidden">Carrello: </span>
+		<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 		<span id="cart-count" class="badge rounded-pill bg-light text-dark"><?= $cart_count ?></span>
 		<span class="visually-hidden"> elementi</span>
 	</a>

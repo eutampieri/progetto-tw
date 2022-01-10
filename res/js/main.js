@@ -82,7 +82,7 @@ async function display_order(order_id, previous_heading_level) {
 			let placeCol = document.createElement("td");
 			placeCol.appendChild(document.createTextNode(update.place))
 			row.appendChild(placeCol);
-			row.childNodes.forEach(x => x.scope = "col");
+			//row.childNodes.forEach(x => x.scope = "col");
 			tbody.appendChild(row);
 		}
 	});
@@ -117,7 +117,7 @@ function create_go_to_cart_modal(item, quantity) {
 	root.ariaLabel = "Vai al carrello";
 	root.ariaHidden = true;
 	root.innerHTML = modalContent;
-	const body = root.getElementById("cartModalProduct");
+	const body = root.querySelector("#cartModalProduct");
 	let product = document.createElement("p");
 	product.innerHTML = "Hai aggiunto " + quantity.toString() + " " + item.name + " al carrello";
 	document.getElementsByTagName("body")[0].appendChild(root);
@@ -131,8 +131,8 @@ function update_cart_items(cart) {
 
 async function update_item_quantity_btn(button) {
 	let cart = await update_item_quantity(button.dataset["product"], button.dataset["increment"]);
-	const item = cart.find((x) => parseInt(x.id) === parseInt(button.dataset["product"]));
-	new bootstrap.Modal(create_go_to_cart_modal(item), parseInt(button.dataset["increment"])).show();
+	const item = cart.items.find((x) => parseInt(x.product_id) === parseInt(button.dataset["product"]));
+	new bootstrap.Modal(create_go_to_cart_modal(item, parseInt(button.dataset["increment"]))).show();
 
 	update_cart_items(cart);
 }
