@@ -13,7 +13,7 @@ if(isset($_REQUEST["create_checkout"]) && isset($_SESSION["cart_id"])){
     $pdo = get_db();
 
     //Fix quantities in cart
-    $stmt = $pdo->prepare("UPDATE cart SET quantity=MIN(quantity, (SELECT quantity FROM product WHERE id=product_id)) WHERE id = :cart_id");
+    $stmt = $pdo->prepare("UPDATE cart SET quantity=(SELECT LEAST(product.quantity, cart.quantity) FROM product WHERE id=product_id) WHERE id = :cart_id;");
     $stmt->bindParam(":cart_id", $_SESSION["cart_id"]);
     $stmt->execute();
 
