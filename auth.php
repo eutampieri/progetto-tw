@@ -38,7 +38,6 @@ function user_login(string $email, string $password) {
 }
 
 session_start();
-// TODO: error/success messages
 if ($_POST["action"]==="login") {
 	if(user_login($_POST["email"],$_POST["password"])) {
 		if(isset($_SESSION["payment_pending"]) && $_SESSION["payment_pending"] === true) {
@@ -48,7 +47,7 @@ if ($_POST["action"]==="login") {
 			header("Location: /me.php");
 		}
 	} else {
-		header("Location: /login.php");
+		header("Location: /login.php?login_error=true");
 	}
 } else if ($_POST["action"]==="signup") {
 	if(user_create($_POST["name"],$_POST["email"],$_POST["password"])) {
