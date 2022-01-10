@@ -1,13 +1,15 @@
 <?php
 	require_once("utils.php");
+	session_start();
 	$stripe = new Stripe("sk_test_wWygRumClv9lRAWpxQyLyzgD00oDfv5zAD");
 	$db = get_db();
 	$order_id = $_GET['order_id'];
 	if(!is_numeric($order_id)) {
 		die("order_id must be a number");
 	}
-	$order_query = $db->prepare("select cart_id, payment_id, tracking_number, name as courier_name from `order` left join express_courier on express_courier_id = `order`.express_courier_id where `order`.id=:order_id");
+	$order_query = $db->prepare("select cart_id, payment_id, tracking_number, name as courier_name from `order` left join express_courier on express_courier_id = `order`.express_courier_id where `order`.id=:order_id and `order`.user_id = :user_id");
 	$order_query->bindParam(":order_id", $order_id);
+	$order_query->bindParam(":user_id", $_SESSION["user_id"]);
 	$order_query->execute();
 	$res['order'] = $order_query->fetch(PDO::FETCH_ASSOC);
 	$updates_query = $db->prepare("select timestamp, status , \"Magazzino\" as place from order_update where order_id = :order_id order by `timestamp` desc");
