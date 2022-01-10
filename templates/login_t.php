@@ -1,5 +1,10 @@
 <h2>Entra</h2>
 <form method="post" action="auth.php">
+	<?php if(isset($_GET["login_error"])): ?>
+		<div class="alert alert-danger" role="alert">
+			Email o password non validi
+		</div>
+	<?php endif; ?>
 	<input type="hidden" name="action" value="login" />
   <div class="form-group">
     <label for="email">Indirizzo email</label>
