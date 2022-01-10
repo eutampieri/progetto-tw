@@ -3,7 +3,7 @@ require_once(dirname(dirname(__FILE__))."/utils.php");
 ?>
 <main class="row">
     <section class="col-md-4">
-        <img class="w-100" src="/image.php?id=<?= $product["id"] ?>">
+        <img alt="" class="w-100" src="/image.php?id=<?= $product["id"] ?>">
     </section>
     <section class="col-md-8">
         <div class="d-flex justify-content-between">
