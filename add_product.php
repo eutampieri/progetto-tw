@@ -4,8 +4,8 @@ require_once("utils.php");
 session_start();
 
 $db = get_db();
-$product["name"] = "Nome prodotto";
-$product["description"] = "Descrizione prodotto";
+$product["name"] = "";
+$product["description"] = "";
 $product["price"] = 10;
 $product["quantity"] = 1;
 $product["id"] = null;

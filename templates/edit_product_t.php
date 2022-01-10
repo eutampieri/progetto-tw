@@ -10,18 +10,18 @@
 		<input name="id" type="hidden" value="<?= $product["id"] ?>" />
 		<div class="form-group">
 			<label for="p_name">Nome</label>
-			<input id="p_name" class="form-control" name="name" type="text" value="<?= $product["name"] ?>"/>
+			<input placeholder="Nome prodotto" id="p_name" class="form-control" name="name" type="text" value="<?= $product["name"] ?>"/>
 		</div>
 		<div class="form-group">
 			<label for="p_desc">Descrizione</label>
-			<textarea id="p_desc" class="form-control" name="description"><?= $product["description"] ?></textarea>
+			<textarea placeholder="Descrizione del prodotto" id="p_desc" class="form-control" name="description"><?= $product["description"] ?></textarea>
 		</div>
 		<div class="form-group">
 			<label for="p_price">Prezzo in EUR</label>
 			<input id="p_price" class="form-control" name="price" type="number" step=0.01 value="<?= $product["price"]/100 ?>" />
 		</div>
 		<div class="form-group">
-			<label for="p_qty">Quantità</label>
+			<label for="p_qty">Quantità in magazzino</label>
 			<input id="p_qty" class="form-control" name="quantity" type="number" step=1 value="<?= $product["quantity"] ?>" /></label>
 		</div>
 		<div class="mb-3">
