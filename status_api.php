@@ -14,7 +14,7 @@
 	$updates_query->bindParam(":order_id", $order_id);
 	$updates_query->execute();
 	$res['updates'] = $updates_query->fetchAll(PDO::FETCH_ASSOC);
-	$cart_query = $db->prepare("select product_id, quantity, name from cart, product where cart.id = :cart_id and product.id = product_id");
+	$cart_query = $db->prepare("select product_id, cart.quantity, name from cart, product where cart.id = :cart_id and product.id = product_id");
 	$cart_query->bindParam(":cart_id", $res['order']["cart_id"]);
 	$cart_query->execute();
 	$res['cart'] = $cart_query->fetchAll(PDO::FETCH_ASSOC);
