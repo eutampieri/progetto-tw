@@ -19,6 +19,7 @@ async function display_order(order_id, previous_heading_level) {
 		hStart = parseInt(previous_heading_level);
 	}
 	let res = document.createElement("div");
+	res.classList.add("order");
 	let title = document.createElement("h" + (1 + hStart).toString());
 	title.appendChild(document.createTextNode("Ordine #" + order_id.toString()));
 	res.appendChild(title);
@@ -99,7 +100,7 @@ function create_go_to_cart_modal() {
 	<div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
-		<h5 class="modal-title">Vui andare al carrello?</h5>
+		<h5 class="modal-title">Vuoi andare al carrello?</h5>
 		</div>
 		<div class="modal-body">
 		</div>
@@ -170,4 +171,8 @@ function render_credit_card(card) {
 	lastFour.appendChild(document.createTextNode(card.last4));
 	res.appendChild(lastFour);
 	return res;
+}
+
+function priceToString(price) {
+	return ((price / 100.0).toFixed(2) + " &euro;").replace('.', ',');
 }

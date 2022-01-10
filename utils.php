@@ -131,3 +131,14 @@ function send_notification($user, $message, $status = 0) {
     }
     return intval($db->lastInsertId());
 }
+function poste_tracking($tracking_num) {
+    $res = json_decode(http_request("https://www.poste.it/online/dovequando/DQ-REST/ricercasemplice", json_encode([
+        "tipoRichiedente" => "WEB",
+        "codiceSpedizione" => $tracking_num,
+        "periodoRicerca" => 1,
+    ]), ["Content-Type: application/json"], "POST"), true);
+    if(!isset($res["listaMovimenti"])) {
+        return [];
+    }
+    return array_map(fn($x) => ["timestamp" => $x["dataOra"]/1000, "status" => $x["statoLavorazione"], "place" => $x["luogo"]], $res["listaMovimenti"]);
+}
